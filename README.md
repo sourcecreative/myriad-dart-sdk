@@ -1,6 +1,6 @@
 # myriad_dart_sdk
 
-A new flutter package project.
+A dart package for Myriad project.
 
 ## Getting Started
 
