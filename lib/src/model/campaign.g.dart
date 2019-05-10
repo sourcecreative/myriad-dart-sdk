@@ -17,7 +17,7 @@ VoucherCampaign<T> _$VoucherCampaignFromJson<T extends VoucherConfig>(
       json['totalSupply'] as int,
       json['config'] == null
           ? null
-          : _VoucherConfigConverter<T>().fromJson(json['config']),
+          : VoucherConfigConverter<T>().fromJson(json['config']),
       autoUpdate: json['autoUpdate'] as bool,
       rules: (json['rules'] as List)
           ?.map((e) =>
@@ -52,7 +52,7 @@ Map<String, dynamic> _$VoucherCampaignToJson<T extends VoucherConfig>(
       'config',
       instance.config == null
           ? null
-          : _VoucherConfigConverter<T>().toJson(instance.config));
+          : VoucherConfigConverter<T>().toJson(instance.config));
   writeNotNull('rules', instance.rules);
   return val;
 }

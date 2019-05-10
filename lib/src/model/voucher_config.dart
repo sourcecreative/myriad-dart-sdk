@@ -13,8 +13,8 @@ enum VoucherType {
 abstract class VoucherConfig {
   VoucherType type;
   int redemption = 1;
-
   CodeConfig codeConfig;
+  
   VoucherConfig(this.type, CodeConfig codeConfig, [this.redemption])
     : this.codeConfig = codeConfig;
 }
@@ -99,4 +99,38 @@ class GiftConfig extends VoucherConfig {
     && o.codeConfig == codeConfig && o.product == product;
     
   int get hashCode => hashObjects([type,redemption,codeConfig,product]);
+}
+
+class VoucherConfigConverter<T> implements JsonConverter<T, Object> {
+  const VoucherConfigConverter();
+  @override
+  T fromJson(Object json) {
+    if (json is Map<String, dynamic>) {
+      var voucherType = json['type'];
+      if (voucherType == _getSimpleName(VoucherType.COUPON)) 
+        return CouponConfig.fromJson(json) as T;
+      else if (voucherType == _getSimpleName(VoucherType.GIFT))
+        return GiftConfig.fromJson(json) as T;
+      else if (voucherType == _getSimpleName(VoucherType.PREPAID_CARD))
+        return PrepaidCardConfig.fromJson(json) as T;
+      else
+        throw Exception("Unknown Voucher Type");  
+    }
+    // This will only work if `json` is a native JSON type:
+    //   num, String, bool, null, etc
+    // *and* is assignable to `T`.
+    return json as T;
+  }
+
+  String _getSimpleName(dynamic enumValue) {
+    return enumValue.toString().split('.').last;
+  }
+
+  @override
+  Object toJson(T object) {
+    // This will only work if `object` is a native JSON type:
+    //   num, String, bool, null, etc
+    // Or if it has a `toJson()` function`.
+    return object;
+  }
 }
