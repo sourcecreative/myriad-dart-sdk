@@ -1,57 +1,58 @@
 import 'package:dio/dio.dart';
 
-import './repository/campaign_api_provider.dart';
-import './repository/campaign_repository.dart';
-import './service/campaign_service.dart';
-
-class ConnectionConfig {
+class ConnectionOptions {
   static const String HTTP_HEADER_APP_ID = 'x-app-id';
   static const String HTTP_HEADER_APP_TOKEN = 'x-app-token';
   static const String HTTP_HEADER_MYRIAD_CHANNEL = 'x-myriad-channel';
 
   String baseUrl = "https://myriad-api.sourcecreative.io/";
-  final String appId;
-  final String appSecret;
+  final String _appId;
+  final String _appSecret;
 
-  ConnectionConfig(this.baseUrl, [this.appId, this.appSecret]);
+  ConnectionOptions(this.baseUrl, {String appId, String appSecret})
+    : this._appId = appId, 
+      this._appSecret = appSecret;
+}
+
+abstract class MyriadConnection {
+  Future<Response<T>> post<T>(String path, {dynamic data, Map<String, dynamic> queryParams});
+}
+
+class _MyriadClientConnection extends MyriadConnection {
+  Dio _dio;
+
+  _MyriadClientConnection(this._dio);
+
+  @override
+  Future<Response<T>> post<T>(String path, {data, Map<String, dynamic> queryParams}) {
+    return _dio.post(path, data:data, queryParameters:queryParams);
+  }
+  
 }
 
 class MyriadClient {
-  static final MyriadClient _instance = MyriadClient._internal();
-  
-  Dio _dio;
-  ConnectionConfig _config;
-
-  Map<String, dynamic> _services = Map<String, dynamic>();
-
-  CampaignService get campaigns => _services[CampaignService.KEY];
+  static final MyriadClient _instance = MyriadClient._internal();  
 
   factory MyriadClient() {
     return _instance;
   }
 
-  MyriadClient._internal() {
-    _dio = Dio(BaseOptions(receiveTimeout: 5000, connectTimeout: 5000));
-    _registerServices();
+  MyriadClient._internal();
+
+  MyriadConnection connect(ConnectionOptions options) {
+    Dio _dio = Dio(BaseOptions(receiveTimeout: 5000, connectTimeout: 5000));
+    _dio.options.baseUrl = options.baseUrl;
+    _setupInterceptors(_dio, options);
+    return _MyriadClientConnection(_dio);
   }
 
-  connect(ConnectionConfig config) {
-    this._config = config;
-    _dio.options.baseUrl = _config.baseUrl;
-    _setupInterceptors(_config);
-  }
-
-  _registerServices() {
-    _services.putIfAbsent(CampaignService.KEY, () => CampaignService(CampaignRepository(CampaignApiProvider(_dio))));
-  }
-
-  _setupInterceptors(ConnectionConfig cfg) {
+  _setupInterceptors(Dio dio, ConnectionOptions connectionOptions) {
     // add interceptor to set headers
-    _dio.interceptors.add(InterceptorsWrapper(
+    dio.interceptors.add(InterceptorsWrapper(
       onRequest: (RequestOptions options){
-        options.headers[ConnectionConfig.HTTP_HEADER_APP_ID] = cfg.appId;
-        options.headers[ConnectionConfig.HTTP_HEADER_APP_TOKEN] = cfg.appSecret;
-        options.headers[ConnectionConfig.HTTP_HEADER_MYRIAD_CHANNEL] = 'Dart-SDK';
+        options.headers[ConnectionOptions.HTTP_HEADER_APP_ID] = connectionOptions._appId;
+        options.headers[ConnectionOptions.HTTP_HEADER_APP_TOKEN] = connectionOptions._appSecret;
+        options.headers[ConnectionOptions.HTTP_HEADER_MYRIAD_CHANNEL] = 'Dart-SDK';
         return options;
       },
       onResponse:(Response response) {
@@ -68,7 +69,7 @@ class MyriadClient {
     ));
     
     // add logging interceptor
-    _dio.interceptors.add(LogInterceptor(responseBody: false));
+    dio.interceptors.add(LogInterceptor(responseBody: false));
   }
 
 }
