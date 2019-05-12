@@ -35,6 +35,7 @@ class MyriadClient {
         ChopperClient(
           client: httpClient,
           converter: myriadConverter,
+          errorConverter: myriadConverter,
           baseUrl: options.baseUrl,
           services:[
             CampaignService.create()
