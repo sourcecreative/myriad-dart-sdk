@@ -13,7 +13,6 @@ void main() {
       DateTime.parse('2019-04-28')
     );
     final jsonCampaign = _encode(campaign1);
-    print(jsonCampaign);
     final campaign2 = CampaignResponse.fromJson(json.decode(jsonCampaign) as Map<String, dynamic>); 
     expect(_encode(campaign2), equals(jsonCampaign));
   });
@@ -27,7 +26,6 @@ void main() {
       DateTime.parse('2019-04-28')
     );
     final jsonCampaign = _encode(campaign1);
-    print(jsonCampaign);
     final campaign2 = VoucherCampaignResponse.fromJson(json.decode(jsonCampaign) as Map<String, dynamic>); 
     expect(_encode(campaign2), equals(jsonCampaign));
   });

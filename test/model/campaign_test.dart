@@ -11,7 +11,6 @@ void main() {
       metadata:{'locale':'en-GB'});
     final jsonCampaign = _encode(campaign1);
     final campaign2 = VoucherCampaign.fromJson(json.decode(jsonCampaign) as Map<String, dynamic>); 
-    print(jsonCampaign);
     expect(campaign1, campaign2);
     expect(_encode(campaign2), equals(jsonCampaign));
   });
@@ -21,7 +20,6 @@ void main() {
       1000, GiftConfig(CodeConfig(length:10,charset:CodeConfig.ALPHABETIC), 'iPad'));
     final jsonCampaign = _encode(campaign1);
     final campaign2 = VoucherCampaign.fromJson(json.decode(jsonCampaign) as Map<String, dynamic>); 
-    print(jsonCampaign);
     expect(campaign1, campaign2);
     expect(_encode(campaign2), equals(jsonCampaign));
   });
