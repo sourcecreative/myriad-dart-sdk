@@ -1,4 +1,9 @@
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
+import 'package:chopper/chopper.dart';
+
+import '../myriad_dart_sdk.dart';
+import 'myriad_converter.dart';
+import 'service/campaign_service.dart';
 
 class ConnectionOptions {
   static const String HTTP_HEADER_APP_ID = 'x-app-id';
@@ -12,64 +17,47 @@ class ConnectionOptions {
   ConnectionOptions(this.baseUrl, {String appId, String appSecret})
     : this._appId = appId, 
       this._appSecret = appSecret;
-}
 
-abstract class MyriadConnection {
-  Future<Response<T>> post<T>(String path, {dynamic data, Map<String, dynamic> queryParams});
-}
-
-class _MyriadClientConnection extends MyriadConnection {
-  Dio _dio;
-
-  _MyriadClientConnection(this._dio);
-
-  @override
-  Future<Response<T>> post<T>(String path, {data, Map<String, dynamic> queryParams}) {
-    return _dio.post(path, data:data, queryParameters:queryParams);
-  }
-  
 }
 
 class MyriadClient {
-  static final MyriadClient _instance = MyriadClient._internal();  
+  static final Map<String, MyriadClient> _cache = <String, MyriadClient>{};
+  final String _name;
+  ChopperClient _chopper;
 
-  factory MyriadClient() {
-    return _instance;
+  MyriadClient._internal(this._name, this._chopper);
+
+  factory MyriadClient(ConnectionOptions options,{http.Client httpClient}) {
+    if (_cache.containsKey(options.baseUrl))
+      return _cache[options.baseUrl];
+    else {
+      final client = MyriadClient._internal(options.baseUrl,
+        ChopperClient(
+          client: httpClient,
+          converter: myriadConverter,
+          baseUrl: options.baseUrl,
+          services:[
+            CampaignService.create()
+          ],
+          interceptors: [
+            HttpLoggingInterceptor(),
+            HeadersInterceptor({
+              ConnectionOptions.HTTP_HEADER_APP_ID: options._appId,
+              ConnectionOptions.HTTP_HEADER_APP_TOKEN: options._appSecret,
+              ConnectionOptions.HTTP_HEADER_MYRIAD_CHANNEL: 'Myriad-Dart-SDK'
+            })
+          ]
+        )
+      );
+      _cache[options.baseUrl] = client;
+      return client;
+    }
   }
 
-  MyriadClient._internal();
-
-  MyriadConnection connect(ConnectionOptions options) {
-    Dio _dio = Dio(BaseOptions(receiveTimeout: 5000, connectTimeout: 5000));
-    _dio.options.baseUrl = options.baseUrl;
-    _setupInterceptors(_dio, options);
-    return _MyriadClientConnection(_dio);
-  }
-
-  _setupInterceptors(Dio dio, ConnectionOptions connectionOptions) {
-    // add interceptor to set headers
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (RequestOptions options){
-        options.headers[ConnectionOptions.HTTP_HEADER_APP_ID] = connectionOptions._appId;
-        options.headers[ConnectionOptions.HTTP_HEADER_APP_TOKEN] = connectionOptions._appSecret;
-        options.headers[ConnectionOptions.HTTP_HEADER_MYRIAD_CHANNEL] = 'Dart-SDK';
-        return options;
-      },
-      onResponse:(Response response) {
-        // Do something with response data
-        int statusCode = response.statusCode;
-        if (statusCode >= 100 && statusCode < 300)
-          return response; // continue
-        return new DioError(message: response.data['errorMsg']);  
-      },
-      onError: (DioError e) {
-        // Do something with response error
-        return  e;//continue
-      }
-    ));
-    
-    // add logging interceptor
-    dio.interceptors.add(LogInterceptor(responseBody: false));
-  }
+  // helper methods for services
+  CampaignService get campaigns => _chopper.getService<CampaignService>();
 
 }
+
+
+

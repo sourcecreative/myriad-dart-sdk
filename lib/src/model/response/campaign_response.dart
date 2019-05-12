@@ -30,7 +30,7 @@ class CampaignResponse {
 }
 
 @JsonSerializable(includeIfNull: false)
-class VoucherCampaignResponse<T extends VoucherConfig> extends CampaignResponse {
+class VoucherCampaignResponse<T> extends CampaignResponse {
   bool autoUpdate;
 
   @VoucherConfigConverter()
@@ -47,5 +47,7 @@ class VoucherCampaignResponse<T extends VoucherConfig> extends CampaignResponse 
 
   factory VoucherCampaignResponse.fromJson(Map<String, dynamic> json) => _$VoucherCampaignResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherCampaignResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$VoucherCampaignResponseFromJson;
 }
 

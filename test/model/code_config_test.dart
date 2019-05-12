@@ -1,4 +1,4 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 
 import 'package:myriad_dart_sdk/src/model/code_config.dart';

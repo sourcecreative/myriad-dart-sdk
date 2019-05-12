@@ -71,9 +71,8 @@ const _$CampaignStatusEnumMap = <CampaignStatus, dynamic>{
   CampaignStatus.ARCHIVED: 'ARCHIVED'
 };
 
-VoucherCampaignResponse<T>
-    _$VoucherCampaignResponseFromJson<T extends VoucherConfig>(
-        Map<String, dynamic> json) {
+VoucherCampaignResponse<T> _$VoucherCampaignResponseFromJson<T>(
+    Map<String, dynamic> json) {
   return VoucherCampaignResponse<T>(
       json['id'] as String,
       json['name'] as String,
@@ -99,7 +98,7 @@ VoucherCampaignResponse<T>
       json['description'] as String);
 }
 
-Map<String, dynamic> _$VoucherCampaignResponseToJson<T extends VoucherConfig>(
+Map<String, dynamic> _$VoucherCampaignResponseToJson<T>(
     VoucherCampaignResponse<T> instance) {
   final val = <String, dynamic>{};
 
