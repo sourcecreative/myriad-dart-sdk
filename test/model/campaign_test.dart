@@ -1,11 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 
-import 'package:myriad_dart_sdk/src/model/campaign.dart';
-import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
-import 'package:myriad_dart_sdk/src/model/code_config.dart';
-import 'package:myriad_dart_sdk/src/model/discount.dart';
-import 'package:myriad_dart_sdk/src/model/rule.dart';
+import 'package:myriad_dart_sdk/myriad_dart_sdk.dart';
 
 void main() {
   test('CouponCampaign json serialization', () {

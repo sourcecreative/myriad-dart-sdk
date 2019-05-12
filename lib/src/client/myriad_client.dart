@@ -1,9 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'package:chopper/chopper.dart';
 
-import '../myriad_dart_sdk.dart';
-import 'myriad_converter.dart';
-import 'service/campaign_service.dart';
+import '../converter/myriad_converter.dart';
+import '../service/campaign_service.dart';
 
 class ConnectionOptions {
   static const String HTTP_HEADER_APP_ID = 'x-app-id';

@@ -1,7 +1,7 @@
 import 'package:chopper/chopper.dart';
 
-import 'model/response/campaign_response.dart';
-import 'myriad_error.dart';
+import '../model/response/campaign_response.dart';
+import '../common/myriad_error.dart';
 
 //typedef JsonDeserialize<T> = T Function(Map<String,dynamic> json);
 typedef T JsonDeserialize<T>(Map<String, dynamic> json);

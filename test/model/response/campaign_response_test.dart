@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:myriad_dart_sdk/src/model/response/campaign_response.dart';
 import 'package:myriad_dart_sdk/src/model/response/rule_response.dart';
 import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
-import 'package:myriad_dart_sdk/src/model/code_config.dart';
-import 'package:myriad_dart_sdk/src/model/discount.dart';
 
 void main() {
   test('CampaignResponse json serialization', () {

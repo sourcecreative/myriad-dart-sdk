@@ -1,16 +1,11 @@
-import 'package:myriad_dart_sdk/src/model/campaign.dart';
-import 'package:myriad_dart_sdk/src/model/code_config.dart';
-import 'package:myriad_dart_sdk/src/model/response/campaign_response.dart';
-import 'package:myriad_dart_sdk/src/model/response/rule_response.dart';
-import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
-import 'package:myriad_dart_sdk/src/myriad_client.dart';
+import '../myriad_dart_sdk_test.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'dart:convert';
 
-import 'package:myriad_dart_sdk/src/myriad_error.dart';
+import 'package:myriad_dart_sdk/myriad_dart_sdk.dart';
 
 void main() {
 
