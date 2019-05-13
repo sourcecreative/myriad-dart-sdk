@@ -20,16 +20,16 @@ class ConnectionOptions {
 }
 
 class MyriadClient {
-  static final Map<String, MyriadClient> _cache = <String, MyriadClient>{};
+  // static final Map<String, MyriadClient> _cache = <String, MyriadClient>{};
   final String _name;
-  ChopperClient _chopper;
+  final ChopperClient _chopper;
 
   MyriadClient._internal(this._name, this._chopper);
 
-  factory MyriadClient(ConnectionOptions options,{http.Client httpClient}) {
-    if (_cache.containsKey(options.baseUrl))
-      return _cache[options.baseUrl];
-    else {
+  factory MyriadClient.build(ConnectionOptions options,{http.Client httpClient}) {
+    // if (_cache.containsKey(options.baseUrl))
+    //   return _cache[options.baseUrl];
+    // else {
       final client = MyriadClient._internal(options.baseUrl,
         ChopperClient(
           client: httpClient,
@@ -49,9 +49,9 @@ class MyriadClient {
           ]
         )
       );
-      _cache[options.baseUrl] = client;
+      // _cache[options.baseUrl] = client;
       return client;
-    }
+    //}
   }
 
   // helper methods for services
