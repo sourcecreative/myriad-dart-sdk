@@ -27,6 +27,8 @@ class CampaignResponse {
   factory CampaignResponse.fromJson(Map<String, dynamic> json) => _$CampaignResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CampaignResponseToJson(this);
 
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$CampaignResponseFromJson;
+
 }
 
 @JsonSerializable(includeIfNull: false)
@@ -49,5 +51,20 @@ class VoucherCampaignResponse<T> extends CampaignResponse {
   Map<String, dynamic> toJson() => _$VoucherCampaignResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$VoucherCampaignResponseFromJson;
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedCampaignsResponse {
+  final int total;
+  final int page;
+  final int size;
+  final List<CampaignResponse> campaigns;
+
+  PaginatedCampaignsResponse(this.campaigns, {this.total, this.page=1, this.size=20});
+
+  factory PaginatedCampaignsResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCampaignsResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedCampaignsResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedCampaignsResponseFromJson;
 }
 

@@ -5,10 +5,23 @@ import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 
 part "campaign_service.chopper.dart";
 
-@ChopperApi()
+@ChopperApi(baseUrl:"/campaigns")
 abstract class CampaignService extends ChopperService {
-  static CampaignService create([ChopperClient client]) => _$CampaignService(client);
+  static CampaignService newInstance([ChopperClient client]) => _$CampaignService(client);
 
-  @Post(path:"campaigns")
-  Future<Response<VoucherCampaignResponse>> createCampaign(@Body() VoucherCampaign<VoucherConfig> campaign);
+  @Post()
+  Future<Response<VoucherCampaignResponse>> create(@Body() VoucherCampaign<VoucherConfig> campaign);
+
+  @Get(path:"/{id}")
+  Future<Response<CampaignResponse>> findById(@Path() String id);
+
+  @Get()
+  Future<Response<PaginatedCampaignsResponse>> list({@Query() int page=1, @Query() int size=20});
+
+  @Put(path:"/{id}")
+  Future<Response<CampaignResponse>> update(@Path() String id, @Body() UpdateCampaign campaign);
+
+  @Delete(path:"/{id}")
+  Future<Response<void>> delete(@Path() String id);
+
 }

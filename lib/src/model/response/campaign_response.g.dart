@@ -126,3 +126,33 @@ Map<String, dynamic> _$VoucherCampaignResponseToJson<T>(
   writeNotNull('rules', instance.rules);
   return val;
 }
+
+PaginatedCampaignsResponse _$PaginatedCampaignsResponseFromJson(
+    Map<String, dynamic> json) {
+  return PaginatedCampaignsResponse(
+      (json['campaigns'] as List)
+          ?.map((e) => e == null
+              ? null
+              : CampaignResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      total: json['total'] as int,
+      page: json['page'] as int,
+      size: json['size'] as int);
+}
+
+Map<String, dynamic> _$PaginatedCampaignsResponseToJson(
+    PaginatedCampaignsResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('total', instance.total);
+  writeNotNull('page', instance.page);
+  writeNotNull('size', instance.size);
+  writeNotNull('campaigns', instance.campaigns);
+  return val;
+}

@@ -37,7 +37,7 @@ class MyriadClient {
           errorConverter: myriadConverter,
           baseUrl: options.baseUrl,
           services:[
-            CampaignService.create()
+            CampaignService.newInstance()
           ],
           interceptors: [
             HttpLoggingInterceptor(),

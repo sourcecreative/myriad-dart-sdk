@@ -73,6 +73,9 @@ class NoJsonSerializerError extends Error {
 /// register response deserializers
 final myriadConverter = MyriadConverter(
   {
+    CampaignResponse: CampaignResponse.deserialize,
+    PaginatedCampaignsResponse: PaginatedCampaignsResponse.deserialize,
     VoucherCampaignResponse: VoucherCampaignResponse.deserialize
+
   }
 );

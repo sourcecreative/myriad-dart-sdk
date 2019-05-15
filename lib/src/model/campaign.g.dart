@@ -82,3 +82,33 @@ const _$CampaignTypeEnumMap = <CampaignType, dynamic>{
   CampaignType.REFERRAL: 'REFERRAL',
   CampaignType.PROMOTION: 'PROMOTION'
 };
+
+UpdateCampaign _$UpdateCampaignFromJson(Map<String, dynamic> json) {
+  return UpdateCampaign(
+      description: json['description'] as String,
+      category: json['category'] as String,
+      effective: json['effective'] == null
+          ? null
+          : DateTime.parse(json['effective'] as String),
+      expiry: json['expiry'] == null
+          ? null
+          : DateTime.parse(json['expiry'] as String),
+      metadata: json['metadata'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UpdateCampaignToJson(UpdateCampaign instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  writeNotNull('category', instance.category);
+  writeNotNull('effective', instance.effective?.toIso8601String());
+  writeNotNull('expiry', instance.expiry?.toIso8601String());
+  writeNotNull('metadata', instance.metadata);
+  return val;
+}

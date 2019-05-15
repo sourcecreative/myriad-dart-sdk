@@ -50,3 +50,19 @@ class VoucherCampaign<T extends VoucherConfig> extends Campaign {
   int get hashCode => hashObjects([type,name,effective,expiry,totalSupply,autoUpdate,config,description,category,metadata]);
 
 }
+
+@JsonSerializable(includeIfNull: false)
+class UpdateCampaign {
+  String description;
+  String category;
+  DateTime effective;
+  DateTime expiry;
+  Map<String, dynamic> metadata;
+
+  UpdateCampaign({this.description,this.category,this.effective,this.expiry,this.metadata});
+
+  factory UpdateCampaign.fromJson(Map<String, dynamic> json) => _$UpdateCampaignFromJson(json);
+  Map<String, dynamic> toJson() => _$UpdateCampaignToJson(this);
+
+
+}
