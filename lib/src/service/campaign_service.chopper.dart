@@ -14,13 +14,11 @@ class _$CampaignService extends CampaignService {
 
   final definitionType = CampaignService;
 
-  Future<Response<VoucherCampaignResponse>> create(
-      VoucherCampaign<VoucherConfig> campaign) {
+  Future<Response<CampaignResponse>> create(Campaign campaign) {
     final $url = '/campaigns/';
     final $body = campaign;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client
-        .send<VoucherCampaignResponse, VoucherCampaignResponse>($request);
+    return client.send<CampaignResponse, CampaignResponse>($request);
   }
 
   Future<Response<CampaignResponse>> findById(String id) {
@@ -50,5 +48,24 @@ class _$CampaignService extends CampaignService {
     final $url = '/campaigns/${id}';
     final $request = Request('DELETE', $url, client.baseUrl);
     return client.send<void, void>($request);
+  }
+
+  Future<Response<CampaignResponse>> attachRules(String id, Set<Rule> rules) {
+    final $url = '/campaigns/${id}/rules';
+    final $body = rules;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<CampaignResponse, CampaignResponse>($request);
+  }
+
+  Future<Response<CampaignResponse>> detachRules(String id) {
+    final $url = '/campaigns/${id}/rules';
+    final $request = Request('DELETE', $url, client.baseUrl);
+    return client.send<CampaignResponse, CampaignResponse>($request);
+  }
+
+  Future<Response<CampaignResponse>> detachRule(String id, String ruleId) {
+    final $url = '/campaigns/${id}/rules/${ruleId}';
+    final $request = Request('DELETE', $url, client.baseUrl);
+    return client.send<CampaignResponse, CampaignResponse>($request);
   }
 }

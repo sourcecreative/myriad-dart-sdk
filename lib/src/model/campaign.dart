@@ -4,6 +4,7 @@ import 'package:quiver/collection.dart';
 
 import 'voucher_config.dart';
 import 'rule.dart';
+import 'tier.dart';
 
 part 'campaign.g.dart';
 
@@ -52,6 +53,24 @@ class VoucherCampaign<T extends VoucherConfig> extends Campaign {
 }
 
 @JsonSerializable(includeIfNull: false)
+class PromotionCampaign extends Campaign {
+  List<Tier> tiers;
+
+  PromotionCampaign(String name, DateTime effective, DateTime expiry, this.tiers, {
+    String description, String category, Map<String, dynamic> metadata
+  }) : super(CampaignType.PROMOTION, name, effective, expiry,description:description,category:category,metadata:metadata);
+
+  factory PromotionCampaign.fromJson(Map<String, dynamic> json) => _$PromotionCampaignFromJson(json);
+  Map<String, dynamic> toJson() => _$PromotionCampaignToJson(this);
+
+  bool operator == (o) => o is PromotionCampaign && o.type == type && o.name == name
+    && o.effective == effective && o.expiry == expiry && listsEqual(o.tiers,tiers)
+    && o.description == description && o.category == category && mapsEqual(o.metadata,metadata);
+
+  int get hashCode => hashObjects([type,name,effective,expiry,tiers,description,category,metadata]);  
+}
+
+@JsonSerializable(includeIfNull: false)
 class UpdateCampaign {
   String description;
   String category;
@@ -63,6 +82,5 @@ class UpdateCampaign {
 
   factory UpdateCampaign.fromJson(Map<String, dynamic> json) => _$UpdateCampaignFromJson(json);
   Map<String, dynamic> toJson() => _$UpdateCampaignToJson(this);
-
-
 }
+

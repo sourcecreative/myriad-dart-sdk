@@ -1,23 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'rule_response.dart';
+part of 'tier_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RuleResponse _$RuleResponseFromJson(Map<String, dynamic> json) {
-  return RuleResponse(
+TierResponse _$TierResponseFromJson(Map<String, dynamic> json) {
+  return TierResponse(
       json['id'] as String,
       json['name'] as String,
-      json['description'] as String,
-      json['condition'] as String,
-      json['action'] as String,
-      json['priority'] as int)
+      (json['rules'] as List)
+          ?.map((e) => e == null
+              ? null
+              : RuleResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      description: json['description'] as String,
+      metadata: json['metadata'] as Map<String, dynamic>)
     ..objType = json['objType'] as String;
 }
 
-Map<String, dynamic> _$RuleResponseToJson(RuleResponse instance) {
+Map<String, dynamic> _$TierResponseToJson(TierResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -30,8 +33,7 @@ Map<String, dynamic> _$RuleResponseToJson(RuleResponse instance) {
   writeNotNull('id', instance.id);
   writeNotNull('name', instance.name);
   writeNotNull('description', instance.description);
-  writeNotNull('condition', instance.condition);
-  writeNotNull('action', instance.action);
-  writeNotNull('priority', instance.priority);
+  writeNotNull('rules', instance.rules);
+  writeNotNull('metadata', instance.metadata);
   return val;
 }

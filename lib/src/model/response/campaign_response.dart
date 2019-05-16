@@ -1,7 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 
+import 'paginated_response.dart';
 import 'rule_response.dart';
-import '../voucher_config.dart';
+import 'tier_response.dart';
+import 'typed_response.dart';
+
 part 'campaign_response.g.dart';
 
 enum CampaignStatus {
@@ -9,20 +13,19 @@ enum CampaignStatus {
 }
 
 @JsonSerializable(includeIfNull: false)
-class CampaignResponse {
-  final String id;
-  final DateTime updatedAt;
-  final String name;
-  final String type;
-  final String description;
-  final CampaignStatus status;
-  final DateTime effective;
-  final DateTime expiry;
-  final Map<String, dynamic> metadata;
+class CampaignResponse extends TypedResponse {
+   String id;
+   DateTime updatedAt;
+   String name;
+   String type;
+   String description;
+   String category;
+   CampaignStatus status;
+   DateTime effective;
+   DateTime expiry;
+   Map<String, dynamic> metadata;
 
-  CampaignResponse(this.id, this.name, this.type, this.effective, this.expiry, 
-    Map<String, dynamic> metadata, this.status, this.updatedAt, [this.description])
-    : this.metadata = metadata??<String,dynamic>{};
+  CampaignResponse(String objType) : super(objType);
 
   factory CampaignResponse.fromJson(Map<String, dynamic> json) => _$CampaignResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CampaignResponseToJson(this);
@@ -38,31 +41,35 @@ class VoucherCampaignResponse<T> extends CampaignResponse {
   @VoucherConfigConverter()
   T config;
 
-  // redemption rules
   List<RuleResponse> rules;
-
-  VoucherCampaignResponse(String id, String name, String type, DateTime effective, DateTime expiry, 
-    this.autoUpdate, this.config, List<RuleResponse> rules, Map<String, dynamic> metadata, 
-    CampaignStatus status, DateTime updatedAt, [String description]) 
-    : this.rules = rules??<RuleResponse>[],
-      super(id, name, type, effective, expiry, metadata, status, updatedAt);
+  
+  VoucherCampaignResponse() : super('VoucherCampaign');
 
   factory VoucherCampaignResponse.fromJson(Map<String, dynamic> json) => _$VoucherCampaignResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherCampaignResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$VoucherCampaignResponseFromJson;
+ 
 }
 
 @JsonSerializable(includeIfNull: false)
-class PaginatedCampaignsResponse {
-  final int total;
-  final int page;
-  final int size;
-  final List<CampaignResponse> campaigns;
+class PromotionCampaignResponse extends CampaignResponse {
+  List<TierResponse> tiers;
+  
+  PromotionCampaignResponse() : super('PromotionCampaign');
+  
+  factory PromotionCampaignResponse.fromJson(Map<String, dynamic> json) => _$PromotionCampaignResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PromotionCampaignResponseToJson(this);
 
-  PaginatedCampaignsResponse(this.campaigns, {this.total, this.page=1, this.size=20});
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PromotionCampaignResponseFromJson;
+}
 
-  factory PaginatedCampaignsResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCampaignsResponseFromJson(json);
+@JsonSerializable(includeIfNull: false)
+class PaginatedCampaignsResponse extends PaginatedResponse<CampaignResponse> {
+  PaginatedCampaignsResponse(List<CampaignResponse> entries, int total, { int page=1, int size=20}) 
+    : super("PaginatedCampaigns",entries, total, page:page, size:size);
+
+ factory PaginatedCampaignsResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCampaignsResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PaginatedCampaignsResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedCampaignsResponseFromJson;

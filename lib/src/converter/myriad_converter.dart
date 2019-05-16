@@ -1,21 +1,25 @@
 import 'package:chopper/chopper.dart';
 
 import '../model/response/campaign_response.dart';
+import '../model/response/tier_response.dart';
+import '../model/response/rule_response.dart';
 import '../common/myriad_error.dart';
 
 //typedef JsonDeserialize<T> = T Function(Map<String,dynamic> json);
 typedef T JsonDeserialize<T>(Map<String, dynamic> json);
 
 class MyriadConverter extends JsonConverter {
-  final Map<Type, JsonDeserialize> factories;
+  final Map<String, JsonDeserialize> factories;
 
   MyriadConverter(this.factories);
 
   T _decodeMap<T>(Map<String, dynamic> json) {
     /// Get Convert using Type parameters
     /// if not found or invalid, throw error
-    final deserialize = factories[T];
-    if (deserialize == null || deserialize is! JsonDeserialize<T>) {
+    var objType = json['objType'];
+    final deserialize = factories[objType];
+//    if (deserialize == null || deserialize is! JsonDeserialize<T>) {
+    if (deserialize == null || deserialize is! JsonDeserialize) {
       /// throw serializer not found error;
       throw NoJsonSerializerError(T);
     }
@@ -73,9 +77,11 @@ class NoJsonSerializerError extends Error {
 /// register response deserializers
 final myriadConverter = MyriadConverter(
   {
-    CampaignResponse: CampaignResponse.deserialize,
-    PaginatedCampaignsResponse: PaginatedCampaignsResponse.deserialize,
-    VoucherCampaignResponse: VoucherCampaignResponse.deserialize
-
+    "Campaign": CampaignResponse.deserialize,
+    "PaginatedCampaigns": PaginatedCampaignsResponse.deserialize,
+    "VoucherCampaign": VoucherCampaignResponse.deserialize,
+    "PromotionCampaign": PromotionCampaignResponse.deserialize,
+    "Tier": TierResponse.deserialize,
+    "Rule": RuleResponse.deserialize
   }
 );
