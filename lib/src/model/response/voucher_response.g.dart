@@ -111,3 +111,27 @@ Map<String, dynamic> _$PaginatedVoucherResponseToJson(
   writeNotNull('entries', instance.entries);
   return val;
 }
+
+ImportVoucherResponse _$ImportVoucherResponseFromJson(
+    Map<String, dynamic> json) {
+  return ImportVoucherResponse()
+    ..objType = json['objType'] as String
+    ..count = json['count'] as int
+    ..imported = json['imported'] as int;
+}
+
+Map<String, dynamic> _$ImportVoucherResponseToJson(
+    ImportVoucherResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('objType', instance.objType);
+  writeNotNull('count', instance.count);
+  writeNotNull('imported', instance.imported);
+  return val;
+}

@@ -48,4 +48,12 @@ class _$VoucherService extends VoucherService {
     final $request = Request('DELETE', $url, client.baseUrl);
     return client.send<void, void>($request);
   }
+
+  Future<Response<ImportVoucherResponse>> import(
+      List<Voucher<VoucherConfig>> voucher) {
+    final $url = '/vouchers/import';
+    final $body = voucher;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<ImportVoucherResponse, ImportVoucherResponse>($request);
+  }
 }

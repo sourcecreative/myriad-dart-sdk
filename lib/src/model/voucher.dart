@@ -11,6 +11,7 @@ class Voucher<T extends VoucherConfig> {
   @VoucherConfigConverter()
   T config;
   Map<String, dynamic> metadata;
+  String category;
 
   Voucher(this.config,{this.code, Map<String, dynamic> metadata})
     : this.metadata = metadata ?? <String,dynamic>{};

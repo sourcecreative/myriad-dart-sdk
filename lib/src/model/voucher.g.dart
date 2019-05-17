@@ -13,7 +13,8 @@ Voucher<T> _$VoucherFromJson<T extends VoucherConfig>(
           ? null
           : VoucherConfigConverter<T>().fromJson(json['config']),
       code: json['code'] as String,
-      metadata: json['metadata'] as Map<String, dynamic>);
+      metadata: json['metadata'] as Map<String, dynamic>)
+    ..category = json['category'] as String;
 }
 
 Map<String, dynamic> _$VoucherToJson<T extends VoucherConfig>(
@@ -33,6 +34,7 @@ Map<String, dynamic> _$VoucherToJson<T extends VoucherConfig>(
           ? null
           : VoucherConfigConverter<T>().toJson(instance.config));
   writeNotNull('metadata', instance.metadata);
+  writeNotNull('category', instance.category);
   return val;
 }
 

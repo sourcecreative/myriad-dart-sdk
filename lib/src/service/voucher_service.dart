@@ -24,4 +24,7 @@ abstract class VoucherService extends ChopperService {
   @Delete(path:"/{id}")
   Future<Response<void>> delete(@Path() String id);
 
+  @Post(path:"/import")
+  Future<Response<ImportVoucherResponse>> import(@Body() List<Voucher> voucher);
+
 }

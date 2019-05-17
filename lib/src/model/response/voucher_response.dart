@@ -39,8 +39,22 @@ class PaginatedVoucherResponse extends PaginatedResponse<VoucherResponse> {
   PaginatedVoucherResponse(List<VoucherResponse> entries, int total, { int page=1, int size=20}) 
     : super("PaginatedVoucherResponse",entries, total, page:page, size:size);
 
- factory PaginatedVoucherResponse.fromJson(Map<String, dynamic> json) => _$PaginatedVoucherResponseFromJson(json);
+  factory PaginatedVoucherResponse.fromJson(Map<String, dynamic> json) => _$PaginatedVoucherResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PaginatedVoucherResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedVoucherResponseFromJson;
+}
+
+@JsonSerializable(includeIfNull: false)
+class ImportVoucherResponse extends TypedResponse {
+  int count;
+  int imported;
+
+  ImportVoucherResponse() : super("ImportVoucherResponse");
+
+  factory ImportVoucherResponse.fromJson(Map<String, dynamic> json) => _$ImportVoucherResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ImportVoucherResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$ImportVoucherResponseFromJson;
+  
 }

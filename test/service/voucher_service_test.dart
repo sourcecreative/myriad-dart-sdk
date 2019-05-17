@@ -268,4 +268,39 @@ void main() async {
     });
   });
 
+  group("VoucherService.import",() {
+    test("success", () async {
+      var voucher1 = Voucher(GiftConfig(CodeConfig(),"iPhone X"))
+        ..metadata=<String,dynamic>{}
+        ..category="test"
+        ..code="test1";
+      var voucher2 = Voucher(CouponConfig(CodeConfig(),AmountDiscount(10)))
+        ..metadata=<String,dynamic>{}
+        ..category="test"
+        ..code="test2";
+      var vouchers = [voucher1,voucher2];
+      var jsonResp = json.encode(ImportVoucherResponse()
+        ..count = 2
+        ..imported = 2);
+      
+      var httpClient = MockClient((http.Request req) async {
+        expect(req.url.toString(), equals('https://api.sourcecreative.io/vouchers/import'));
+        return http.Response(
+          jsonResp,
+          200,
+          headers: {'content-type': 'application/json; charset=utf-8'},
+        );
+      });
+
+      var client = MyriadClient.build(
+        ConnectionOptions("https://api.sourcecreative.io", appId:'appid',appSecret:'appkey'),
+        httpClient: httpClient
+      );
+
+      var r = await client.vouchers.import(vouchers);
+      expect(json.encode(r.body), equals(jsonResp));
+      httpClient.close();
+    });
+  });
+
 }
