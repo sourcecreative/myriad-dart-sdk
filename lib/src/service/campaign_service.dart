@@ -2,7 +2,10 @@ import 'package:chopper/chopper.dart';
 
 import 'package:myriad_dart_sdk/src/model/campaign.dart';
 import 'package:myriad_dart_sdk/src/model/response/campaign_response.dart';
+import 'package:myriad_dart_sdk/src/model/response/voucher_response.dart';
 import 'package:myriad_dart_sdk/src/model/rule.dart';
+import 'package:myriad_dart_sdk/src/model/voucher.dart';
+import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 
 part "campaign_service.chopper.dart";
 
@@ -24,6 +27,10 @@ abstract class CampaignService extends ChopperService {
 
   @Delete(path:"/{id}")
   Future<Response<void>> delete(@Path() String id);
+
+  @Post(path:"/{id}/vouchers/import")
+  Future<Response<ImportVoucherResponse>> importVouchers(@Path() String id, @Body() List<Voucher<VoucherConfig>> voucher);
+
 
   @Post(path:"/{id}/rules")
   Future<Response<CampaignResponse>> attachRules(@Path() String id, @Body() Set<Rule> rules);
