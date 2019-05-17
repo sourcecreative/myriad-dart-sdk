@@ -3,6 +3,7 @@ import 'package:chopper/chopper.dart';
 
 import '../converter/myriad_converter.dart';
 import '../service/campaign_service.dart';
+import '../service/voucher_service.dart';
 
 class ConnectionOptions {
   static const String HTTP_HEADER_APP_ID = 'x-app-id';
@@ -37,7 +38,8 @@ class MyriadClient {
           errorConverter: myriadConverter,
           baseUrl: options.baseUrl,
           services:[
-            CampaignService.newInstance()
+            CampaignService.newInstance(),
+            VoucherService.newInstance()
           ],
           interceptors: [
             HttpLoggingInterceptor(),
@@ -56,7 +58,7 @@ class MyriadClient {
 
   // helper methods for services
   CampaignService get campaigns => _chopper.getService<CampaignService>();
-
+  VoucherService get vouchers => _chopper.getService<VoucherService>();
 }
 
 

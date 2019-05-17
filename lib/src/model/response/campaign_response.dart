@@ -64,13 +64,13 @@ class PromotionCampaignResponse extends CampaignResponse {
 }
 
 @JsonSerializable(includeIfNull: false)
-class PaginatedCampaignsResponse extends PaginatedResponse<CampaignResponse> {
-  PaginatedCampaignsResponse(List<CampaignResponse> entries, int total, { int page=1, int size=20}) 
-    : super("PaginatedCampaignsResponse",entries, total, page:page, size:size);
+class PaginatedCampaignResponse extends PaginatedResponse<CampaignResponse> {
+  PaginatedCampaignResponse(List<CampaignResponse> entries, int total, { int page=1, int size=20}) 
+    : super("PaginatedCampaignResponse",entries, total, page:page, size:size);
 
- factory PaginatedCampaignsResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCampaignsResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$PaginatedCampaignsResponseToJson(this);
+ factory PaginatedCampaignResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCampaignResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedCampaignResponseToJson(this);
 
-  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedCampaignsResponseFromJson;
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedCampaignResponseFromJson;
 }
 

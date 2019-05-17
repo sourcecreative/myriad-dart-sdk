@@ -56,12 +56,12 @@ class CodeConfig {
   static const NUMBERS = '0123456789';
 
   int length = 8;
-  String charset = NUMBERS;
+  String charset;
   String prefix;
   String postfix;
   String pattern;
 
-  CodeConfig({this.length,this.charset,this.pattern,this.prefix,this.postfix});
+  CodeConfig({this.length=8,this.charset=NUMBERS,this.pattern,this.prefix,this.postfix});
   factory CodeConfig.fromJson(Map<String, dynamic> json) => _$CodeConfigFromJson(json);
   Map<String, dynamic> toJson() => _$CodeConfigToJson(this);
 

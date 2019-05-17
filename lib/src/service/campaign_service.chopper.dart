@@ -27,13 +27,13 @@ class _$CampaignService extends CampaignService {
     return client.send<CampaignResponse, CampaignResponse>($request);
   }
 
-  Future<Response<PaginatedCampaignsResponse>> list(
+  Future<Response<PaginatedCampaignResponse>> list(
       {int page = 1, int size = 20}) {
     final $url = '/campaigns/';
     final Map<String, dynamic> $params = {'page': page, 'size': size};
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client
-        .send<PaginatedCampaignsResponse, PaginatedCampaignsResponse>($request);
+        .send<PaginatedCampaignResponse, PaginatedCampaignResponse>($request);
   }
 
   Future<Response<CampaignResponse>> update(

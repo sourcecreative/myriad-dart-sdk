@@ -3,6 +3,7 @@ import 'package:chopper/chopper.dart';
 import '../model/response/campaign_response.dart';
 import '../model/response/tier_response.dart';
 import '../model/response/rule_response.dart';
+import '../model/response/voucher_response.dart';
 import '../common/myriad_error.dart';
 
 //typedef JsonDeserialize<T> = T Function(Map<String,dynamic> json);
@@ -18,7 +19,7 @@ class MyriadConverter extends JsonConverter {
     /// if not found or invalid, throw error
     var objType = json['objType'];
     final deserialize = registry[objType];
-    if (deserialize == null || deserialize is! JsonDeserialize<T>) {
+    if (deserialize == null || deserialize is! JsonDeserialize) {
       /// throw serializer not found error;
       throw NoJsonSerializerError(T, objType);
     }
@@ -78,10 +79,12 @@ class NoJsonSerializerError extends Error {
 final myriadConverter = MyriadConverter(
   {
     "CampaignResponse": CampaignResponse.deserialize,
-    "PaginatedCampaignsResponse": PaginatedCampaignsResponse.deserialize,
+    "PaginatedCampaignResponse": PaginatedCampaignResponse.deserialize,
     "VoucherCampaignResponse": VoucherCampaignResponse.deserialize,
     "PromotionCampaignResponse": PromotionCampaignResponse.deserialize,
     "TierResponse": TierResponse.deserialize,
-    "RuleResponse": RuleResponse.deserialize
+    "RuleResponse": RuleResponse.deserialize,
+    "VoucherResponse": VoucherResponse.deserialize,
+    "PaginatedVoucherResponse": PaginatedVoucherResponse.deserialize    
   }
 );

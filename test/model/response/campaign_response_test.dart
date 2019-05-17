@@ -61,9 +61,9 @@ void main() {
       ..updatedAt=DateTime.parse('2019-05-28')
       ..metadata={'locale':'en-GB'};
 
-    final resp = PaginatedCampaignsResponse([campaign1, campaign2],100);
+    final resp = PaginatedCampaignResponse([campaign1, campaign2],100);
     final jsonResp = _encode(resp);
-    final expected = PaginatedCampaignsResponse.fromJson(json.decode(jsonResp) as Map<String,dynamic>);
+    final expected = PaginatedCampaignResponse.fromJson(json.decode(jsonResp) as Map<String,dynamic>);
     expect(_encode(expected),equals(jsonResp));
   });
 

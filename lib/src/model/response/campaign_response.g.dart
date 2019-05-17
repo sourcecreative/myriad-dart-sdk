@@ -185,9 +185,9 @@ Map<String, dynamic> _$PromotionCampaignResponseToJson(
   return val;
 }
 
-PaginatedCampaignsResponse _$PaginatedCampaignsResponseFromJson(
+PaginatedCampaignResponse _$PaginatedCampaignResponseFromJson(
     Map<String, dynamic> json) {
-  return PaginatedCampaignsResponse(
+  return PaginatedCampaignResponse(
       (json['entries'] as List)
           ?.map((e) => e == null
               ? null
@@ -199,8 +199,8 @@ PaginatedCampaignsResponse _$PaginatedCampaignsResponseFromJson(
     ..objType = json['objType'] as String;
 }
 
-Map<String, dynamic> _$PaginatedCampaignsResponseToJson(
-    PaginatedCampaignsResponse instance) {
+Map<String, dynamic> _$PaginatedCampaignResponseToJson(
+    PaginatedCampaignResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

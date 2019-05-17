@@ -318,7 +318,7 @@ void main() async {
 
   });
 
-  group("CampaignService.findAll",() {
+  group("CampaignService.list",() {
     test("success", () async {
       var campaign1 = CampaignResponse('VoucherCampaign')
         ..id="dcf9c4d9-1d99-42d0-b4f2-5b631fe54ea1"
@@ -340,7 +340,7 @@ void main() async {
         ..updatedAt=DateTime.parse("2019-06-01")
         ..metadata=<String,dynamic>{}
         ..category="test2";
-      var campaigns = PaginatedCampaignsResponse([campaign1,campaign2],2);
+      var campaigns = PaginatedCampaignResponse([campaign1,campaign2],2);
       var jsonResp = json.encode(campaigns);
       var httpClient = MockClient((http.Request req) async {
         expect(req.url.toString(), equals('https://api.sourcecreative.io/campaigns/?page=1&size=20'));

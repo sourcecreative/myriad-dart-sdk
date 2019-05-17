@@ -3,7 +3,6 @@ import 'package:chopper/chopper.dart';
 import 'package:myriad_dart_sdk/src/model/campaign.dart';
 import 'package:myriad_dart_sdk/src/model/response/campaign_response.dart';
 import 'package:myriad_dart_sdk/src/model/rule.dart';
-import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 
 part "campaign_service.chopper.dart";
 
@@ -18,7 +17,7 @@ abstract class CampaignService extends ChopperService {
   Future<Response<CampaignResponse>> findById(@Path() String id);
 
   @Get()
-  Future<Response<PaginatedCampaignsResponse>> list({@Query() int page=1, @Query() int size=20});
+  Future<Response<PaginatedCampaignResponse>> list({@Query() int page=1, @Query() int size=20});
 
   @Put(path:"/{id}")
   Future<Response<CampaignResponse>> update(@Path() String id, @Body() UpdateCampaign campaign);
