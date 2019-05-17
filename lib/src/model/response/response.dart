@@ -1,4 +1,9 @@
-import 'package:myriad_dart_sdk/src/model/response/typed_response.dart';
+abstract class TypedResponse {
+  String objType;
+  
+  TypedResponse(this.objType);
+
+}
 
 abstract class PaginatedResponse<T> extends TypedResponse{
   final int total;

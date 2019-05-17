@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'typed_response.dart';
+import 'response.dart';
 import 'rule_response.dart';
 
 part 'tier_response.g.dart';

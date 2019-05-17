@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:quiver/core.dart';
 
-import 'typed_response.dart';
+import 'response.dart';
 
 part 'rule_response.g.dart';
 

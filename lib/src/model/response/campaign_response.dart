@@ -1,10 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 
-import 'paginated_response.dart';
+import 'response.dart';
 import 'rule_response.dart';
 import 'tier_response.dart';
-import 'typed_response.dart';
 
 part 'campaign_response.g.dart';
 
@@ -14,16 +13,16 @@ enum CampaignStatus {
 
 @JsonSerializable(includeIfNull: false)
 class CampaignResponse extends TypedResponse {
-   String id;
-   DateTime updatedAt;
-   String name;
-   String type;
-   String description;
-   String category;
-   CampaignStatus status;
-   DateTime effective;
-   DateTime expiry;
-   Map<String, dynamic> metadata;
+  String id;
+  DateTime updatedAt;
+  String name;
+  String type;
+  String description;
+  String category;
+  CampaignStatus status;
+  DateTime effective;
+  DateTime expiry;
+  Map<String, dynamic> metadata;
 
   CampaignResponse(String objType) : super(objType);
 
@@ -43,7 +42,7 @@ class VoucherCampaignResponse<T> extends CampaignResponse {
 
   List<RuleResponse> rules;
   
-  VoucherCampaignResponse() : super('VoucherCampaign');
+  VoucherCampaignResponse() : super('VoucherCampaignResponse');
 
   factory VoucherCampaignResponse.fromJson(Map<String, dynamic> json) => _$VoucherCampaignResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherCampaignResponseToJson(this);
@@ -56,7 +55,7 @@ class VoucherCampaignResponse<T> extends CampaignResponse {
 class PromotionCampaignResponse extends CampaignResponse {
   List<TierResponse> tiers;
   
-  PromotionCampaignResponse() : super('PromotionCampaign');
+  PromotionCampaignResponse() : super('PromotionCampaignResponse');
   
   factory PromotionCampaignResponse.fromJson(Map<String, dynamic> json) => _$PromotionCampaignResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PromotionCampaignResponseToJson(this);
@@ -67,7 +66,7 @@ class PromotionCampaignResponse extends CampaignResponse {
 @JsonSerializable(includeIfNull: false)
 class PaginatedCampaignsResponse extends PaginatedResponse<CampaignResponse> {
   PaginatedCampaignsResponse(List<CampaignResponse> entries, int total, { int page=1, int size=20}) 
-    : super("PaginatedCampaigns",entries, total, page:page, size:size);
+    : super("PaginatedCampaignsResponse",entries, total, page:page, size:size);
 
  factory PaginatedCampaignsResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCampaignsResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PaginatedCampaignsResponseToJson(this);

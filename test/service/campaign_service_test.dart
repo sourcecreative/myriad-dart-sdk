@@ -202,7 +202,7 @@ void main() async {
 
   group("CampaignService.findById",() {
     test("success", () async {
-      var resp = CampaignResponse("VoucherCampaign")
+      var resp = VoucherCampaignResponse()
         ..id="dcf9c4d9-1d99-42d0-b4f2-5b631fe54ea2"
         ..name="campaign name"
         ..type="VOUCHER"
@@ -260,7 +260,7 @@ void main() async {
       var updateReq = UpdateCampaign(description: "test update", 
         metadata: <String,dynamic>{"locale":"en_GB"});
       var jsonReq = json.encode(updateReq);
-      var updateResp = CampaignResponse('VoucherCampaign')
+      var updateResp = VoucherCampaignResponse()
         ..id="dcf9c4d9-1d99-42d0-b4f2-5b631fe54ea2"
         ..name="campaign name"
         ..type="VOUCHER"

@@ -9,19 +9,18 @@ import '../common/myriad_error.dart';
 typedef T JsonDeserialize<T>(Map<String, dynamic> json);
 
 class MyriadConverter extends JsonConverter {
-  final Map<String, JsonDeserialize> factories;
+  final Map<String, JsonDeserialize> registry;
 
-  MyriadConverter(this.factories);
+  MyriadConverter(this.registry);
 
   T _decodeMap<T>(Map<String, dynamic> json) {
-    /// Get Convert using Type parameters
+    /// Get deserializer from registry - we may need a deserializer for a subclass of T
     /// if not found or invalid, throw error
     var objType = json['objType'];
-    final deserialize = factories[objType];
-//    if (deserialize == null || deserialize is! JsonDeserialize<T>) {
-    if (deserialize == null || deserialize is! JsonDeserialize) {
+    final deserialize = registry[objType];
+    if (deserialize == null || deserialize is! JsonDeserialize<T>) {
       /// throw serializer not found error;
-      throw NoJsonSerializerError(T);
+      throw NoJsonSerializerError(T, objType);
     }
     
     return deserialize(json);
@@ -63,12 +62,13 @@ class MyriadConverter extends JsonConverter {
 class NoJsonSerializerError extends Error {
   /// The exception thrown when trying to convert the object.
   final Type unsupportedType;
+  final String objType;
 
-  NoJsonSerializerError(this.unsupportedType);
+  NoJsonSerializerError(this.unsupportedType, [this.objType]);
 
   String toString() {
-    var safeString = Error.safeToString(unsupportedType);
-    String prefix = "Type has no suitable serializer:";
+    var safeString = objType??Error.safeToString(unsupportedType);
+    String prefix = "Type has no suitable deserializer:";
     return "$prefix $safeString";
   }
 
@@ -77,11 +77,11 @@ class NoJsonSerializerError extends Error {
 /// register response deserializers
 final myriadConverter = MyriadConverter(
   {
-    "Campaign": CampaignResponse.deserialize,
-    "PaginatedCampaigns": PaginatedCampaignsResponse.deserialize,
-    "VoucherCampaign": VoucherCampaignResponse.deserialize,
-    "PromotionCampaign": PromotionCampaignResponse.deserialize,
-    "Tier": TierResponse.deserialize,
-    "Rule": RuleResponse.deserialize
+    "CampaignResponse": CampaignResponse.deserialize,
+    "PaginatedCampaignsResponse": PaginatedCampaignsResponse.deserialize,
+    "VoucherCampaignResponse": VoucherCampaignResponse.deserialize,
+    "PromotionCampaignResponse": PromotionCampaignResponse.deserialize,
+    "TierResponse": TierResponse.deserialize,
+    "RuleResponse": RuleResponse.deserialize
   }
 );
