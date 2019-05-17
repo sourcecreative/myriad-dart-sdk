@@ -28,9 +28,10 @@ class _$CampaignService extends CampaignService {
   }
 
   Future<Response<PaginatedCampaignResponse>> list(
-      {int page = 1, int size = 20}) {
+      {dynamic filter = null, int page = 1, int size = 20}) {
     final $url = '/campaigns/';
     final Map<String, dynamic> $params = {'page': page, 'size': size};
+    $params.addAll(filter);
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client
         .send<PaginatedCampaignResponse, PaginatedCampaignResponse>($request);

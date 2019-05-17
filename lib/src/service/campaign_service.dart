@@ -20,7 +20,7 @@ abstract class CampaignService extends ChopperService {
   Future<Response<CampaignResponse>> findById(@Path() String id);
 
   @Get()
-  Future<Response<PaginatedCampaignResponse>> list({@Query() int page=1, @Query() int size=20});
+  Future<Response<PaginatedCampaignResponse>> list({@QueryMap() filter, @Query() int page=1, @Query() int size=20});
 
   @Put(path:"/{id}")
   Future<Response<CampaignResponse>> update(@Path() String id, @Body() UpdateCampaign campaign);
