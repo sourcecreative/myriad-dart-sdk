@@ -35,3 +35,35 @@ Map<String, dynamic> _$RuleResponseToJson(RuleResponse instance) {
   writeNotNull('priority', instance.priority);
   return val;
 }
+
+PaginatedRuleResponse _$PaginatedRuleResponseFromJson(
+    Map<String, dynamic> json) {
+  return PaginatedRuleResponse(
+      (json['entries'] as List)
+          ?.map((e) => e == null
+              ? null
+              : RuleResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['total'] as int,
+      page: json['page'] as int,
+      size: json['size'] as int)
+    ..objType = json['objType'] as String;
+}
+
+Map<String, dynamic> _$PaginatedRuleResponseToJson(
+    PaginatedRuleResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('objType', instance.objType);
+  writeNotNull('total', instance.total);
+  writeNotNull('page', instance.page);
+  writeNotNull('size', instance.size);
+  writeNotNull('entries', instance.entries);
+  return val;
+}

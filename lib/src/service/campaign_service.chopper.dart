@@ -28,7 +28,9 @@ class _$CampaignService extends CampaignService {
   }
 
   Future<Response<PaginatedCampaignResponse>> list(
-      {dynamic filter = null, int page = 1, int size = 20}) {
+      {Map<String, dynamic> filter = const <String, dynamic>{},
+      int page = 1,
+      int size = 20}) {
     final $url = '/campaigns/';
     final Map<String, dynamic> $params = {'page': page, 'size': size};
     $params.addAll(filter);
@@ -59,22 +61,45 @@ class _$CampaignService extends CampaignService {
     return client.send<ImportVoucherResponse, ImportVoucherResponse>($request);
   }
 
-  Future<Response<CampaignResponse>> attachRules(String id, Set<Rule> rules) {
+  Future<Response<RuleResponse>> addRule(String id, Rule rule) {
     final $url = '/campaigns/${id}/rules';
-    final $body = rules;
+    final $body = rule;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<CampaignResponse, CampaignResponse>($request);
+    return client.send<RuleResponse, RuleResponse>($request);
   }
 
-  Future<Response<CampaignResponse>> detachRules(String id) {
-    final $url = '/campaigns/${id}/rules';
-    final $request = Request('DELETE', $url, client.baseUrl);
-    return client.send<CampaignResponse, CampaignResponse>($request);
+  Future<Response<RuleResponse>> updateRule(
+      String id, String ruleId, Rule rule) {
+    final $url = '/campaigns/${id}/rules/${ruleId}';
+    final $body = rule;
+    final $request = Request('PUT', $url, client.baseUrl, body: $body);
+    return client.send<RuleResponse, RuleResponse>($request);
   }
 
-  Future<Response<CampaignResponse>> detachRule(String id, String ruleId) {
+  Future<Response<void>> removeRule(String id, String ruleId) {
     final $url = '/campaigns/${id}/rules/${ruleId}';
     final $request = Request('DELETE', $url, client.baseUrl);
-    return client.send<CampaignResponse, CampaignResponse>($request);
+    return client.send<void, void>($request);
+  }
+
+  Future<Response<TierResponse>> addTier(String id, Tier tier) {
+    final $url = '/campaigns/${id}/tiers';
+    final $body = tier;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<TierResponse, TierResponse>($request);
+  }
+
+  Future<Response<TierResponse>> updateTier(
+      String id, String tierId, Tier tier) {
+    final $url = '/campaigns/${id}/tiers/${tierId}';
+    final $body = tier;
+    final $request = Request('PUT', $url, client.baseUrl, body: $body);
+    return client.send<TierResponse, TierResponse>($request);
+  }
+
+  Future<Response<void>> removeTier(String id, String tierId) {
+    final $url = '/campaigns/${id}/tiers/${tierId}';
+    final $request = Request('DELETE', $url, client.baseUrl);
+    return client.send<void, void>($request);
   }
 }

@@ -1,9 +1,13 @@
 import 'package:http/http.dart' as http;
 import 'package:chopper/chopper.dart';
 
-import '../converter/myriad_converter.dart';
-import '../service/campaign_service.dart';
-import '../service/voucher_service.dart';
+import 'package:myriad_dart_sdk/src/converter/myriad_converter.dart';
+import 'package:myriad_dart_sdk/src/service/campaign_service.dart';
+
+import 'package:myriad_dart_sdk/src/service/promotion_service.dart';
+import 'package:myriad_dart_sdk/src/service/validation_rule_service.dart';
+import 'package:myriad_dart_sdk/src/service/validation_service.dart';
+import 'package:myriad_dart_sdk/src/service/voucher_service.dart';
 
 class ConnectionOptions {
   static const String HTTP_HEADER_APP_ID = 'x-app-id';
@@ -59,6 +63,9 @@ class MyriadClient {
   // helper methods for services
   CampaignService get campaigns => _chopper.getService<CampaignService>();
   VoucherService get vouchers => _chopper.getService<VoucherService>();
+  TierService get promotions => _chopper.getService<TierService>();
+  ValidationRuleService get rules => _chopper.getService<ValidationRuleService>();
+  ValidationService get validations => _chopper.getService<ValidationService>();
 }
 
 

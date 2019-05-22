@@ -1,5 +1,8 @@
 import 'package:chopper/chopper.dart';
 
+import '../model/response/customer_response.dart';
+import '../model/response/order_response.dart';
+import '../model/response/validation_response.dart';
 import '../model/response/campaign_response.dart';
 import '../model/response/tier_response.dart';
 import '../model/response/rule_response.dart';
@@ -79,13 +82,20 @@ class NoJsonSerializerError extends Error {
 final myriadConverter = MyriadConverter(
   {
     "CampaignResponse": CampaignResponse.deserialize,
+    "CustomerResponse": CustomerResponse.deserialize, 
+    "OrderResponse": OrderResponse.deserialize,
+    "RuleResponse": RuleResponse.deserialize,
     "PaginatedCampaignResponse": PaginatedCampaignResponse.deserialize,
     "VoucherCampaignResponse": VoucherCampaignResponse.deserialize,
     "PromotionCampaignResponse": PromotionCampaignResponse.deserialize,
     "TierResponse": TierResponse.deserialize,
-    "RuleResponse": RuleResponse.deserialize,
     "VoucherResponse": VoucherResponse.deserialize,
     "PaginatedVoucherResponse": PaginatedVoucherResponse.deserialize,
-    "ImportVoucherResponse": ImportVoucherResponse.deserialize    
+    "ImportVoucherResponse": ImportVoucherResponse.deserialize,
+    "PaginatedTierResponse": PaginatedTierResponse.deserialize,
+    "PaginatedRuleResponse": PaginatedRuleResponse.deserialize,
+    "VoucherValidationResponse": VoucherValidationResponse.deserialize,
+    "PromotionValidationResponse": PromotionValidationResponse.deserialize
+            
   }
 );

@@ -28,3 +28,15 @@ class RuleResponse extends TypedResponse {
   int get hashCode => hashObjects([name,description,condition,action,priority]);
 
 }
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedRuleResponse extends PaginatedResponse<RuleResponse> {
+  PaginatedRuleResponse(List<RuleResponse> entries, int total, { int page=1, int size=20}) 
+    : super("PaginatedRuleResponse",entries, total, page:page, size:size);
+
+ factory PaginatedRuleResponse.fromJson(Map<String, dynamic> json) => _$PaginatedRuleResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedRuleResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedRuleResponseFromJson;
+
+}

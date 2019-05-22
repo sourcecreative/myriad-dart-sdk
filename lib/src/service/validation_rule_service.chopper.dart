@@ -1,53 +1,53 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'promotion_service.dart';
+part of 'validation_rule_service.dart';
 
 // **************************************************************************
 // ChopperGenerator
 // **************************************************************************
 
-class _$TierService extends TierService {
-  _$TierService([ChopperClient client]) {
+class _$ValidationRuleService extends ValidationRuleService {
+  _$ValidationRuleService([ChopperClient client]) {
     if (client == null) return;
     this.client = client;
   }
 
-  final definitionType = TierService;
+  final definitionType = ValidationRuleService;
 
-  Future<Response<TierResponse>> create(Tier tier) {
-    final $url = '/tiers/';
+  Future<Response<RuleResponse>> create(Rule tier) {
+    final $url = '/rules/';
     final $body = tier;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<TierResponse, TierResponse>($request);
+    return client.send<RuleResponse, RuleResponse>($request);
   }
 
-  Future<Response<TierResponse>> findById(String id) {
-    final $url = '/tiers/${id}';
+  Future<Response<RuleResponse>> findById(String id) {
+    final $url = '/rules/${id}';
     final $request = Request('GET', $url, client.baseUrl);
-    return client.send<TierResponse, TierResponse>($request);
+    return client.send<RuleResponse, RuleResponse>($request);
   }
 
-  Future<Response<TierResponse>> update(String id, Tier tier) {
-    final $url = '/tiers/${id}';
+  Future<Response<RuleResponse>> update(String id, Rule tier) {
+    final $url = '/rules/${id}';
     final $body = tier;
     final $request = Request('PUT', $url, client.baseUrl, body: $body);
-    return client.send<TierResponse, TierResponse>($request);
+    return client.send<RuleResponse, RuleResponse>($request);
   }
 
   Future<Response<void>> delete(String id) {
-    final $url = '/tiers/${id}';
+    final $url = '/rules/${id}';
     final $request = Request('DELETE', $url, client.baseUrl);
     return client.send<void, void>($request);
   }
 
-  Future<Response<PaginatedTierResponse>> list(
+  Future<Response<PaginatedRuleResponse>> list(
       {Map<String, dynamic> filter = const <String, dynamic>{},
       int page = 1,
       int size = 20}) {
-    final $url = '/tiers/';
+    final $url = '/rules/';
     final Map<String, dynamic> $params = {'page': page, 'size': size};
     $params.addAll(filter);
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
-    return client.send<PaginatedTierResponse, PaginatedTierResponse>($request);
+    return client.send<PaginatedRuleResponse, PaginatedRuleResponse>($request);
   }
 }

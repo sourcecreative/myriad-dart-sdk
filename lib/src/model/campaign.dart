@@ -44,7 +44,7 @@ class VoucherCampaign<T extends VoucherConfig> extends Campaign {
   Map<String, dynamic> toJson() => _$VoucherCampaignToJson(this);
 
   bool operator == (o) => o is VoucherCampaign && o.type == type && o.name == name
-    && o.effective == effective && o.expiry == expiry
+    && o.effective == effective && o.expiry == expiry && listsEqual(o.rules, rules)
     && o.totalSupply == totalSupply && o.autoUpdate == autoUpdate && o.config == config
     && o.description == description && o.category == category && mapsEqual(o.metadata,metadata);
 
