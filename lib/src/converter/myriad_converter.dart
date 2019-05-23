@@ -95,7 +95,9 @@ final myriadConverter = MyriadConverter(
     "PaginatedTierResponse": PaginatedTierResponse.deserialize,
     "PaginatedRuleResponse": PaginatedRuleResponse.deserialize,
     "VoucherValidationResponse": VoucherValidationResponse.deserialize,
-    "PromotionValidationResponse": PromotionValidationResponse.deserialize
+    "PromotionValidationResponse": PromotionValidationResponse.deserialize,
+    "VoucherRedemptionResponse": VoucherRedemptionResponse.deserialize,
+    "PromotionRedemptionResponse": PromotionRedemptionResponse.deserialize
             
   }
 );

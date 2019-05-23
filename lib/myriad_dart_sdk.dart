@@ -22,5 +22,5 @@ export 'src/model/response/validation_response.dart';
 export 'src/service/campaign_service.dart';
 export 'src/service/promotion_service.dart';
 export 'src/service/rule_service.dart';
-export 'src/service/validation_service.dart';
+export 'src/service/redemption_service.dart';
 export 'src/service/voucher_service.dart';

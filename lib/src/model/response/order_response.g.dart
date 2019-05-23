@@ -11,6 +11,7 @@ OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) {
     ..objType = json['objType'] as String
     ..sourceId = json['sourceId'] as String
     ..amount = json['amount'] as int
+    ..discount = json['discount'] as int
     ..currency = json['currency'] == null
         ? null
         : Currency.fromJson(json['currency'] as Map<String, dynamic>)
@@ -18,6 +19,9 @@ OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : OrderItem.fromJson(e as Map<String, dynamic>))
         ?.toList()
+    ..customer = json['customer'] == null
+        ? null
+        : CustomerResponse.fromJson(json['customer'] as Map<String, dynamic>)
     ..metadata = json['metadata'] as Map<String, dynamic>;
 }
 
@@ -34,8 +38,10 @@ Map<String, dynamic> _$OrderResponseToJson(OrderResponse instance) {
   writeNotNull('id', instance.id);
   writeNotNull('sourceId', instance.sourceId);
   writeNotNull('amount', instance.amount);
+  writeNotNull('discount', instance.discount);
   writeNotNull('currency', instance.currency);
   writeNotNull('items', instance.items);
+  writeNotNull('customer', instance.customer);
   writeNotNull('metadata', instance.metadata);
   return val;
 }
