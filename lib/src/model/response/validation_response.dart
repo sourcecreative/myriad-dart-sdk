@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'response.dart';
-import 'customer_response.dart';
 import 'order_response.dart';
 import 'tier_response.dart';
 import 'voucher_response.dart';

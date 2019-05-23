@@ -20,7 +20,7 @@ class MyriadConverter extends JsonConverter {
   T _decodeMap<T>(Map<String, dynamic> json) {
     /// Get deserializer from registry - we may need a deserializer for a subclass of T
     /// if not found or invalid, throw error
-    var objType = json['objType'];
+    var objType = json['objType']??T.toString();
     final deserialize = registry[objType];
     if (deserialize == null || deserialize is! JsonDeserialize) {
       /// throw serializer not found error;
