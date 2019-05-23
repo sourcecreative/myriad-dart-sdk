@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'validation_rule_service.dart';
+part of 'rule_service.dart';
 
 // **************************************************************************
 // ChopperGenerator
 // **************************************************************************
 
-class _$ValidationRuleService extends ValidationRuleService {
-  _$ValidationRuleService([ChopperClient client]) {
+class _$RuleService extends RuleService {
+  _$RuleService([ChopperClient client]) {
     if (client == null) return;
     this.client = client;
   }
 
-  final definitionType = ValidationRuleService;
+  final definitionType = RuleService;
 
   Future<Response<RuleResponse>> create(Rule tier) {
     final $url = '/rules/';

@@ -25,7 +25,7 @@ class Validation {
 class VoucherValidation extends Validation {
   String voucherId;
 
-  VoucherValidation(this.voucherId, customer, order)
+  VoucherValidation(this.voucherId, Customer customer, Order order)
     : super(customer, order);
 
   factory VoucherValidation.fromJson(Map<String, dynamic> json) => _$VoucherValidationFromJson(json);

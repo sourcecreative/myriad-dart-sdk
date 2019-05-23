@@ -5,7 +5,7 @@ import 'package:myriad_dart_sdk/src/converter/myriad_converter.dart';
 import 'package:myriad_dart_sdk/src/service/campaign_service.dart';
 
 import 'package:myriad_dart_sdk/src/service/promotion_service.dart';
-import 'package:myriad_dart_sdk/src/service/validation_rule_service.dart';
+import 'package:myriad_dart_sdk/src/service/rule_service.dart';
 import 'package:myriad_dart_sdk/src/service/validation_service.dart';
 import 'package:myriad_dart_sdk/src/service/voucher_service.dart';
 
@@ -43,7 +43,10 @@ class MyriadClient {
           baseUrl: options.baseUrl,
           services:[
             CampaignService.newInstance(),
-            VoucherService.newInstance()
+            VoucherService.newInstance(),
+            TierService.newInstance(),
+            RuleService.newInstance(),
+            ValidationService.newInstance()
           ],
           interceptors: [
             HttpLoggingInterceptor(),
@@ -64,7 +67,7 @@ class MyriadClient {
   CampaignService get campaigns => _chopper.getService<CampaignService>();
   VoucherService get vouchers => _chopper.getService<VoucherService>();
   TierService get promotions => _chopper.getService<TierService>();
-  ValidationRuleService get rules => _chopper.getService<ValidationRuleService>();
+  RuleService get rules => _chopper.getService<RuleService>();
   ValidationService get validations => _chopper.getService<ValidationService>();
 }
 

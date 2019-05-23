@@ -2,11 +2,11 @@ import 'package:chopper/chopper.dart';
 import 'package:myriad_dart_sdk/src/model/response/rule_response.dart';
 import 'package:myriad_dart_sdk/src/model/rule.dart';
 
-part "validation_rule_service.chopper.dart";
+part "rule_service.chopper.dart";
 
 @ChopperApi(baseUrl:"/rules")
-abstract class ValidationRuleService extends ChopperService {
-  static ValidationRuleService newInstance([ChopperClient client]) => _$ValidationRuleService(client);
+abstract class RuleService extends ChopperService {
+  static RuleService newInstance([ChopperClient client]) => _$RuleService(client);
 
   @Post()
   Future<Response<RuleResponse>> create(@Body() Rule tier);

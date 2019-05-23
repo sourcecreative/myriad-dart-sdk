@@ -32,7 +32,13 @@ Map<String, dynamic> _$ValidationToJson(Validation instance) {
 
 VoucherValidation _$VoucherValidationFromJson(Map<String, dynamic> json) {
   return VoucherValidation(
-      json['voucherId'] as String, json['customer'], json['order']);
+      json['voucherId'] as String,
+      json['customer'] == null
+          ? null
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>),
+      json['order'] == null
+          ? null
+          : Order.fromJson(json['order'] as Map<String, dynamic>));
 }
 
 Map<String, dynamic> _$VoucherValidationToJson(VoucherValidation instance) {

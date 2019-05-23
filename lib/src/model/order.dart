@@ -24,13 +24,13 @@ class Currency {
 class Order {
   // order source id from source app
   String sourceId;
-  int amount;
+  int amount = 0;
   Currency currency;
   List<OrderItem> items;
   Map<String, dynamic> metadata;
 
   Order(this.currency,this.items, {this.sourceId,this.metadata}) {
-    items.forEach((item)=>amount += item.amount);
+    items.forEach((item) => amount += item.amount);
   }
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
