@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 import 'package:usage/uuid/uuid.dart';
 
-import 'package:myriad_dart_sdk/myriad_dart_sdk.dart';
+import 'package:myriad_dart_sdk/myriad_sdk.dart';
 
 void main() {
   

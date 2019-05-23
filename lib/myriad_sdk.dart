@@ -1,4 +1,4 @@
-library myriad_dart_sdk;
+library myriad_sdk;
 
 export 'src/client/myriad_client.dart';
 export 'src/common/myriad_error.dart';

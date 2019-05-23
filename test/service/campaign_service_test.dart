@@ -5,7 +5,7 @@ import 'package:http/testing.dart';
 import 'package:usage/uuid/uuid.dart';
 import 'dart:convert';
 
-import 'package:myriad_dart_sdk/myriad_dart_sdk.dart';
+import 'package:myriad_dart_sdk/myriad_sdk.dart';
 
 void main() async {
   group('CampaignService.create', () {
