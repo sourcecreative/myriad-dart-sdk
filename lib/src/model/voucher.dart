@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'voucher_config.dart';
-import 'response.dart';
 import 'rule.dart';
+import 'paginated_response.dart';
 
 part 'voucher.g.dart';
 
@@ -42,7 +42,7 @@ enum VoucherStatus {
 }
 
 @JsonSerializable(includeIfNull: false)
-class VoucherResponse<T> extends TypedResponse {
+class VoucherResponse<T> {
   String id;
   DateTime updatedAt;
   String campaignId;
@@ -56,7 +56,7 @@ class VoucherResponse<T> extends TypedResponse {
   List<RuleResponse> rules;
   Map<String, dynamic> metadata;
 
-  VoucherResponse() : super('VoucherResponse');
+  VoucherResponse();// : super('VoucherResponse');
   
   factory VoucherResponse.fromJson(Map<String, dynamic> json) => _$VoucherResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherResponseToJson(this);
@@ -68,7 +68,7 @@ class VoucherResponse<T> extends TypedResponse {
 @JsonSerializable(includeIfNull: false)
 class PaginatedVoucherResponse extends PaginatedResponse<VoucherResponse> {
   PaginatedVoucherResponse(List<VoucherResponse> entries, int total, { int page=1, int size=20}) 
-    : super("PaginatedVoucherResponse",entries, total, page:page, size:size);
+    : super(entries, total, page:page, size:size);
 
   factory PaginatedVoucherResponse.fromJson(Map<String, dynamic> json) => _$PaginatedVoucherResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PaginatedVoucherResponseToJson(this);
@@ -77,11 +77,11 @@ class PaginatedVoucherResponse extends PaginatedResponse<VoucherResponse> {
 }
 
 @JsonSerializable(includeIfNull: false)
-class ImportVoucherResponse extends TypedResponse {
+class ImportVoucherResponse  {
   int count;
   int imported;
 
-  ImportVoucherResponse() : super("ImportVoucherResponse");
+  ImportVoucherResponse();// : super("ImportVoucherResponse");
 
   factory ImportVoucherResponse.fromJson(Map<String, dynamic> json) => _$ImportVoucherResponseFromJson(json);
   Map<String, dynamic> toJson() => _$ImportVoucherResponseToJson(this);

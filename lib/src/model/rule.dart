@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:quiver/core.dart';
 
-import 'response.dart';
+import 'paginated_response.dart';
 
 part 'rule.g.dart';
 
@@ -51,7 +51,7 @@ class RuleResponse {
 @JsonSerializable(includeIfNull: false)
 class PaginatedRuleResponse extends PaginatedResponse<RuleResponse> {
   PaginatedRuleResponse(List<RuleResponse> entries, int total, { int page=1, int size=20}) 
-    : super("PaginatedRuleResponse",entries, total, page:page, size:size);
+    : super(entries, total, page:page, size:size);
 
  factory PaginatedRuleResponse.fromJson(Map<String, dynamic> json) => _$PaginatedRuleResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PaginatedRuleResponseToJson(this);

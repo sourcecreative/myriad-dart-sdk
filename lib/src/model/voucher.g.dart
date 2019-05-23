@@ -68,7 +68,6 @@ Map<String, dynamic> _$UpdateVoucherToJson(UpdateVoucher instance) {
 
 VoucherResponse<T> _$VoucherResponseFromJson<T>(Map<String, dynamic> json) {
   return VoucherResponse<T>()
-    ..objType = json['objType'] as String
     ..id = json['id'] as String
     ..updatedAt = json['updatedAt'] == null
         ? null
@@ -96,7 +95,6 @@ Map<String, dynamic> _$VoucherResponseToJson<T>(VoucherResponse<T> instance) {
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('id', instance.id);
   writeNotNull('updatedAt', instance.updatedAt?.toIso8601String());
   writeNotNull('campaignId', instance.campaignId);
@@ -150,8 +148,7 @@ PaginatedVoucherResponse _$PaginatedVoucherResponseFromJson(
           ?.toList(),
       json['total'] as int,
       page: json['page'] as int,
-      size: json['size'] as int)
-    ..objType = json['objType'] as String;
+      size: json['size'] as int);
 }
 
 Map<String, dynamic> _$PaginatedVoucherResponseToJson(
@@ -164,7 +161,6 @@ Map<String, dynamic> _$PaginatedVoucherResponseToJson(
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('total', instance.total);
   writeNotNull('page', instance.page);
   writeNotNull('size', instance.size);
@@ -175,7 +171,6 @@ Map<String, dynamic> _$PaginatedVoucherResponseToJson(
 ImportVoucherResponse _$ImportVoucherResponseFromJson(
     Map<String, dynamic> json) {
   return ImportVoucherResponse()
-    ..objType = json['objType'] as String
     ..count = json['count'] as int
     ..imported = json['imported'] as int;
 }
@@ -190,7 +185,6 @@ Map<String, dynamic> _$ImportVoucherResponseToJson(
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('count', instance.count);
   writeNotNull('imported', instance.imported);
   return val;

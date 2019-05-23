@@ -7,7 +7,7 @@ import 'package:myriad_dart_sdk/myriad_sdk.dart';
 void main() {
   
   test('CampaignResponse json serialization', () {
-    final campaign1 = CampaignResponse('VoucherCampaign')
+    final campaign1 = VoucherCampaignResponse()
       ..id = 'uuid'
       ..name = '51 Sales'
       ..type = 'VOUCHER'
@@ -17,7 +17,7 @@ void main() {
       ..updatedAt = DateTime.parse('2019-04-28')
       ..metadata = {'locale':'en-GB'};
     final jsonCampaign = _encode(campaign1);
-    final campaign2 = CampaignResponse.fromJson(json.decode(jsonCampaign) as Map<String, dynamic>); 
+    final campaign2 = VoucherCampaignResponse.fromJson(json.decode(jsonCampaign) as Map<String, dynamic>); 
     expect(_encode(campaign2), equals(jsonCampaign));
   });
 
@@ -41,7 +41,7 @@ void main() {
   });
 
   test('PaginatedCampaignsResponse', (){
-    final campaign1 = CampaignResponse('VoucherCampaign')
+    final campaign1 = VoucherCampaignResponse()
       ..id=Uuid().generateV4()
       ..name='51 Sales'
       ..type='VOUCHER'
@@ -51,7 +51,7 @@ void main() {
       ..updatedAt=DateTime.parse('2019-04-28')
       ..metadata={'locale':'en-GB'};
     
-    final campaign2 = CampaignResponse('VoucherCampaign')
+    final campaign2 = VoucherCampaignResponse()
       ..id=Uuid().generateV4()
       ..name='61 Sales'
       ..type='VOUCHER'

@@ -81,23 +81,24 @@ class NoJsonSerializerError extends Error {
 /// register response deserializers
 final myriadConverter = MyriadConverter(
   {
-    "CampaignResponse": CampaignResponse.deserialize,
+    "VoucherCampaignResponse<dynamic>": VoucherCampaignResponse.deserialize,
+    "PromotionCampaignResponse": PromotionCampaignResponse.deserialize,
+    "LoyaltyProgramResponse": LoyaltyProgramResponse.deserialize,
     "CustomerResponse": CustomerResponse.deserialize, 
     "OrderResponse": OrderResponse.deserialize,
     "RuleResponse": RuleResponse.deserialize,
-    "PaginatedCampaignResponse": PaginatedCampaignResponse.deserialize,
-    "VoucherCampaignResponse": VoucherCampaignResponse.deserialize,
-    "PromotionCampaignResponse": PromotionCampaignResponse.deserialize,
     "TierResponse": TierResponse.deserialize,
-    "VoucherResponse": VoucherResponse.deserialize,
-    "PaginatedVoucherResponse": PaginatedVoucherResponse.deserialize,
+    "VoucherResponse<dynamic>": VoucherResponse.deserialize,
     "ImportVoucherResponse": ImportVoucherResponse.deserialize,
+    "VoucherValidationResponse<dynamic>": VoucherValidationResponse.deserialize,
+    "PromotionValidationResponse": PromotionValidationResponse.deserialize,
+    "VoucherRedemptionResponse<dynamic>": VoucherRedemptionResponse.deserialize,
+    "PromotionRedemptionResponse": PromotionRedemptionResponse.deserialize,
+    "PaginatedVoucherResponse": PaginatedVoucherResponse.deserialize,
     "PaginatedTierResponse": PaginatedTierResponse.deserialize,
     "PaginatedRuleResponse": PaginatedRuleResponse.deserialize,
-    "VoucherValidationResponse": VoucherValidationResponse.deserialize,
-    "PromotionValidationResponse": PromotionValidationResponse.deserialize,
-    "VoucherRedemptionResponse": VoucherRedemptionResponse.deserialize,
-    "PromotionRedemptionResponse": PromotionRedemptionResponse.deserialize
-            
+    "PaginatedPromotionResponse": PaginatedPromotionResponse.deserialize,
+    "PaginatedLoyaltyResponse": PaginatedLoyaltyResponse.deserialize,
+    "PaginatedCampaignResponse": PaginatedCampaignResponse.deserialize            
   }
 );

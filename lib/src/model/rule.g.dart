@@ -70,8 +70,7 @@ PaginatedRuleResponse _$PaginatedRuleResponseFromJson(
           ?.toList(),
       json['total'] as int,
       page: json['page'] as int,
-      size: json['size'] as int)
-    ..objType = json['objType'] as String;
+      size: json['size'] as int);
 }
 
 Map<String, dynamic> _$PaginatedRuleResponseToJson(
@@ -84,7 +83,6 @@ Map<String, dynamic> _$PaginatedRuleResponseToJson(
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('total', instance.total);
   writeNotNull('page', instance.page);
   writeNotNull('size', instance.size);

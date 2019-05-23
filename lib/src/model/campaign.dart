@@ -3,14 +3,14 @@ import 'package:quiver/core.dart';
 import 'package:quiver/collection.dart';
 
 import 'voucher_config.dart';
-import 'response.dart';
 import 'rule.dart';
 import 'tier.dart';
+import 'paginated_response.dart';
 
 part 'campaign.g.dart';
 
 enum CampaignType {
-	VOUCHER, REFERRAL, PROMOTION
+	VOUCHER, LOYALTY_PROGRAM, PROMOTION
 }
 
 enum CampaignStatus {
@@ -58,6 +58,31 @@ class VoucherCampaign<T extends VoucherConfig> extends Campaign {
 }
 
 @JsonSerializable(includeIfNull: false)
+class LoyaltyProgram extends VoucherCampaign<LoyaltyCardConfig> {
+  List<Rule> earningRules;
+
+  LoyaltyProgram(String name, DateTime effective, DateTime expiry, int totalSupply, LoyaltyCardConfig config, {
+    bool autoUpdate = true, List<Rule> rules = const <Rule>[], List<Rule> earningRules = const <Rule>[], 
+    String description, String category, Map<String, dynamic> metadata}) 
+    : this.earningRules = earningRules,
+      super(name, effective,expiry,totalSupply, config, autoUpdate:autoUpdate, rules:rules,
+        description:description,category:category,metadata:metadata);
+
+  factory LoyaltyProgram.fromJson(Map<String, dynamic> json) => _$LoyaltyProgramFromJson(json);
+  Map<String, dynamic> toJson() => _$LoyaltyProgramToJson(this);
+
+  bool operator == (o) => o is LoyaltyProgram && o.type == type && o.name == name
+    && o.effective == effective && o.expiry == expiry && listsEqual(o.rules, rules)
+    && listsEqual(o.earningRules,earningRules)
+    && o.totalSupply == totalSupply && o.autoUpdate == autoUpdate && o.config == config
+    && o.description == description && o.category == category && mapsEqual(o.metadata,metadata);
+
+  int get hashCode => hashObjects([type,name,effective,expiry,totalSupply,autoUpdate,
+    rules,earningRules,config,description,category,metadata]);
+
+}
+
+@JsonSerializable(includeIfNull: false)
 class PromotionCampaign extends Campaign {
   List<Tier> tiers;
 
@@ -89,8 +114,8 @@ class UpdateCampaign {
   Map<String, dynamic> toJson() => _$UpdateCampaignToJson(this);
 }
 
-@JsonSerializable(includeIfNull: false)
-class CampaignResponse extends TypedResponse {
+/// Response
+abstract class CampaignResponse {
   String id;
   DateTime updatedAt;
   String name;
@@ -102,12 +127,7 @@ class CampaignResponse extends TypedResponse {
   DateTime expiry;
   Map<String, dynamic> metadata;
 
-  CampaignResponse(String objType) : super(objType);
-
-  factory CampaignResponse.fromJson(Map<String, dynamic> json) => _$CampaignResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$CampaignResponseToJson(this);
-
-  static const dynamic Function(Map<String, dynamic>) deserialize = _$CampaignResponseFromJson;
+  CampaignResponse();
 
 }
 
@@ -120,7 +140,7 @@ class VoucherCampaignResponse<T> extends CampaignResponse {
 
   List<RuleResponse> rules;
   
-  VoucherCampaignResponse() : super('VoucherCampaignResponse');
+  VoucherCampaignResponse();
 
   factory VoucherCampaignResponse.fromJson(Map<String, dynamic> json) => _$VoucherCampaignResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherCampaignResponseToJson(this);
@@ -130,10 +150,24 @@ class VoucherCampaignResponse<T> extends CampaignResponse {
 }
 
 @JsonSerializable(includeIfNull: false)
+class LoyaltyProgramResponse<T> extends VoucherCampaignResponse<LoyaltyCardConfig> {
+  List<RuleResponse> earningRules;
+  
+  LoyaltyProgramResponse();
+
+  factory LoyaltyProgramResponse.fromJson(Map<String, dynamic> json) => _$LoyaltyProgramResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$LoyaltyProgramResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$LoyaltyProgramResponseFromJson;
+ 
+}
+
+
+@JsonSerializable(includeIfNull: false)
 class PromotionCampaignResponse extends CampaignResponse {
   List<TierResponse> tiers;
   
-  PromotionCampaignResponse() : super('PromotionCampaignResponse');
+  PromotionCampaignResponse();
   
   factory PromotionCampaignResponse.fromJson(Map<String, dynamic> json) => _$PromotionCampaignResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PromotionCampaignResponseToJson(this);
@@ -142,13 +176,35 @@ class PromotionCampaignResponse extends CampaignResponse {
 }
 
 @JsonSerializable(includeIfNull: false)
-class PaginatedCampaignResponse extends PaginatedResponse<CampaignResponse> {
-  PaginatedCampaignResponse(List<CampaignResponse> entries, int total, { int page=1, int size=20}) 
-    : super("PaginatedCampaignResponse",entries, total, page:page, size:size);
+class PaginatedCampaignResponse extends PaginatedResponse<VoucherCampaignResponse> {
+  PaginatedCampaignResponse(List<VoucherCampaignResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
 
  factory PaginatedCampaignResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCampaignResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PaginatedCampaignResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedCampaignResponseFromJson;
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedPromotionResponse extends PaginatedResponse<PromotionCampaignResponse> {
+  PaginatedPromotionResponse(List<PromotionCampaignResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+ factory PaginatedPromotionResponse.fromJson(Map<String, dynamic> json) => _$PaginatedPromotionResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedPromotionResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedPromotionResponseFromJson;
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedLoyaltyResponse extends PaginatedResponse<LoyaltyProgramResponse> {
+  PaginatedLoyaltyResponse(List<LoyaltyProgramResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+ factory PaginatedLoyaltyResponse.fromJson(Map<String, dynamic> json) => _$PaginatedLoyaltyResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedLoyaltyResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedLoyaltyResponseFromJson;
 }
 

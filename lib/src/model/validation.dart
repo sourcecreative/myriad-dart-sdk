@@ -4,7 +4,6 @@ import 'package:quiver/core.dart';
 
 import 'order.dart';
 import 'customer.dart';
-import 'response.dart';
 import 'voucher.dart';
 import 'tier.dart';
 
@@ -81,19 +80,19 @@ class PromotionRedemption extends Redemption {
 
 }
 
-abstract class ValidationResponse extends TypedResponse {
+abstract class ValidationResponse {
   OrderResponse order;
+  bool valid;
 
-  ValidationResponse._create(String objType) : super(objType);
+  ValidationResponse(this.order, [this.valid = true]);
 }
 
 @JsonSerializable(includeIfNull: false)
 class VoucherValidationResponse<T> extends ValidationResponse {
   VoucherResponse<T> voucher;
-  // is voucher valid?
-  bool valid = false;
 
-  VoucherValidationResponse() : super._create('VoucherValidationResponse');
+  VoucherValidationResponse(this.voucher, OrderResponse order, [bool valid = true])
+    : super(order, valid);
 
   factory VoucherValidationResponse.fromJson(Map<String, dynamic> json) => _$VoucherValidationResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherValidationResponseToJson(this);
@@ -103,11 +102,12 @@ class VoucherValidationResponse<T> extends ValidationResponse {
 }
 
 @JsonSerializable(includeIfNull: false)
-class PromotionValidationResponse<T> extends ValidationResponse {
+class PromotionValidationResponse extends ValidationResponse {
   // applicable promotion tiers
-  List<PromotionTierResponse> tiers;
+  List<TierResponse> tiers;
 
-  PromotionValidationResponse() : super._create('PromotionValidationResponse');
+  PromotionValidationResponse(this.tiers, OrderResponse order, [bool valid = true])
+    : super(order, valid);
 
   factory PromotionValidationResponse.fromJson(Map<String, dynamic> json) => _$PromotionValidationResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PromotionValidationResponseToJson(this);
@@ -126,7 +126,8 @@ abstract class RedemptionResponse extends ValidationResponse {
   RedemptionStatus status;
   Map<String,dynamic> metadata;
 
-  RedemptionResponse._create(String objType) : super._create(objType);
+  RedemptionResponse(OrderResponse order, [bool valid = true])
+    : super(order, valid);
 }
 
 @JsonSerializable(includeIfNull: false)
@@ -134,8 +135,8 @@ class VoucherRedemptionResponse<T> extends RedemptionResponse {
   // voucher redeemed
   VoucherResponse<T> voucher;
 
-  VoucherRedemptionResponse()
-    : super._create('VoucherRedemptionResponse');
+  VoucherRedemptionResponse(OrderResponse order, this.voucher, [bool valid = true])
+    : super(order, valid);
 
   factory VoucherRedemptionResponse.fromJson(Map<String, dynamic> json) => _$VoucherRedemptionResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherRedemptionResponseToJson(this);
@@ -148,8 +149,8 @@ class VoucherRedemptionResponse<T> extends RedemptionResponse {
 class PromotionRedemptionResponse extends RedemptionResponse {
   TierResponse tier;
 
-  PromotionRedemptionResponse()
-    : super._create('PromotionRedemptionResponse');
+  PromotionRedemptionResponse(OrderResponse order, this.tier, [bool valid = true])
+    : super(order, valid);
   
   factory PromotionRedemptionResponse.fromJson(Map<String, dynamic> json) => _$PromotionRedemptionResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PromotionRedemptionResponseToJson(this);

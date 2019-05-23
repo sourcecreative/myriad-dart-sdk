@@ -32,10 +32,7 @@ void main() async {
         ..currency = validation.order.currency
         ..customer = custResp
         ..items = validation.order.items;
-      var expectedResp = VoucherValidationResponse()
-        ..valid = true
-        ..voucher = voucherResp
-        ..order = orderResp;
+      var expectedResp = VoucherValidationResponse(voucherResp,orderResp);
       var jsonResp = json.encode(expectedResp);
       
       var httpClient = MockClient((http.Request req) async {
@@ -54,7 +51,7 @@ void main() async {
         httpClient: httpClient
       );
 
-      var resp = await client.redemptions.validate(validation);
+      var resp = await client.redemptions.validateVoucher(validation);
       expect(json.encode(resp.body), equals(jsonResp));
       httpClient.close();
     });
@@ -76,25 +73,22 @@ void main() async {
         ..currency = validation.order.currency
         ..customer = custResp
         ..items = validation.order.items;
-      var promotionTiers = <PromotionTierResponse>[
-        PromotionTierResponse(Uuid().generateV4())
-          ..id = Uuid().generateV4()
-          ..name = 'tier1'
-          ..rules = <RuleResponse>[
+      var promotionTiers = <TierResponse>[
+        TierResponse(Uuid().generateV4(),'tier1',
+          <RuleResponse>[
             RuleResponse(Uuid().generateV4(), 'order amount limit', 
               'order amount must be greater than 100', 'order.amount > 10000')
-          ],
-        PromotionTierResponse(Uuid().generateV4())
-          ..id = Uuid().generateV4()
-          ..name = 'tier2'
-          ..rules = <RuleResponse>[
+          ]
+        )
+          ..campaignId = Uuid().generateV4(),
+        TierResponse(Uuid().generateV4(),'tier2',
+          <RuleResponse>[
             RuleResponse(Uuid().generateV4(), 'order product restriction', 
               'order must include iPhoneX', 'order.items["iPhoneX"] != null')
-          ]  
+          ]
+        )..campaignId = Uuid().generateV4()
       ];
-      var expectedResp = PromotionValidationResponse()
-        ..order = orderResp
-        ..tiers = promotionTiers;
+      var expectedResp = PromotionValidationResponse(promotionTiers,orderResp);
       var jsonResp = json.encode(expectedResp);
       
       var httpClient = MockClient((http.Request req) async {
@@ -113,7 +107,7 @@ void main() async {
         httpClient: httpClient
       );
 
-      var resp = await client.redemptions.validate(validation);
+      var resp = await client.redemptions.validatePromotion(validation);
       expect(json.encode(resp.body), equals(jsonResp));
       httpClient.close();
     });
@@ -146,10 +140,8 @@ void main() async {
         ..discount = (voucherResp.config.discount as AmountDiscount).amountOff
         ..customer = custResp
         ..items = redemption.order.items;
-      var expectedResp = VoucherRedemptionResponse()
-        ..status = RedemptionStatus.SUCCESS
-        ..voucher = voucherResp
-        ..order = orderResp;
+      var expectedResp = VoucherRedemptionResponse(orderResp,voucherResp)
+        ..status = RedemptionStatus.SUCCESS;
       var jsonResp = json.encode(expectedResp);
       //print(jsonResp);
       var httpClient = MockClient((http.Request req) async {
@@ -168,7 +160,7 @@ void main() async {
         httpClient: httpClient
       );
 
-      var resp = await client.redemptions.validate(redemption);
+      var resp = await client.redemptions.redeemVoucher(redemption);
       expect(json.encode(resp.body), equals(jsonResp));
       httpClient.close();
     });
@@ -199,10 +191,8 @@ void main() async {
         ..discount = 120000
         ..customer = custResp
         ..items = redemption.order.items;
-      var expectedResp = PromotionRedemptionResponse()
-        ..status = RedemptionStatus.SUCCESS
-        ..tier = tierResp
-        ..order = orderResp;
+      var expectedResp = PromotionRedemptionResponse(orderResp,tierResp)
+        ..status = RedemptionStatus.SUCCESS;
       var jsonResp = json.encode(expectedResp);
       //print(jsonResp);
       var httpClient = MockClient((http.Request req) async {
@@ -221,7 +211,7 @@ void main() async {
         httpClient: httpClient
       );
 
-      var resp = await client.redemptions.validate(redemption);
+      var resp = await client.redemptions.redeemPromotion(redemption);
       expect(json.encode(resp.body), equals(jsonResp));
       httpClient.close();
     });

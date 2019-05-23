@@ -155,49 +155,6 @@ void main() async {
       httpClient.close();
     });
 
-    test('create promotion campaign', () async {
-      var rule1 = Rule('order limit','order limit greater than 30', 'order.amount > 30');
-      var tier1 = Tier("tier1", [rule1]);
-      var campaign = PromotionCampaign('Promotion Campaign', DateTime.parse('2019-05-06'), DateTime.parse('2019-07-08'),
-        [tier1], category:'New Customer');
-      var jsonCampaign = json.encode(campaign);
-      
-      var rule1Resp = RuleResponse(Uuid().generateV4(), rule1.name, rule1.description, rule1.condition);
-      var tier1Resp = TierResponse(Uuid().generateV4(),tier1.name,[rule1Resp]);
-      var expectedCampaign = PromotionCampaignResponse()
-        ..id=Uuid().generateV4()
-        ..name=campaign.name
-        ..type='VOUCHER'
-        ..effective=campaign.effective
-        ..expiry=campaign.expiry
-        ..tiers=[tier1Resp]
-        ..status=CampaignStatus.ACTIVE
-        ..updatedAt=DateTime.now()
-        ..category=campaign.category
-        ..metadata=campaign.metadata;      
-      var jsonResp = json.encode(expectedCampaign);
-
-      var httpClient = MockClient((http.Request req) async {
-        expect(req.url.toString(), equals('https://api.sourcecreative.io/campaigns/'));
-        expect(req.headers['content-type'], 'application/json; charset=utf-8');
-        expect(req.body, equals(jsonCampaign));
-        return http.Response(
-          jsonResp,
-          200,
-          headers: {'content-type': 'application/json; charset=utf-8'},
-        );
-      });
-      
-      var client = MyriadClient.build(
-        ConnectionOptions("https://api.sourcecreative.io", appId:'appid',appSecret:'appkey'),
-        httpClient: httpClient
-      );
-      
-      var resp = await client.campaigns.create(campaign);
-      expect(json.encode(resp.body), equals(jsonResp));
-      httpClient.close();
-    });
-
   });
 
   group("CampaignService.findById",() {
@@ -320,9 +277,9 @@ void main() async {
 
   group("CampaignService.list",() {
     test("success", () async {
-      var campaign1 = CampaignResponse('VoucherCampaign')
+      var campaign1 = VoucherCampaignResponse()
         ..id="dcf9c4d9-1d99-42d0-b4f2-5b631fe54ea1"
-        ..name="campaign name"
+        ..name="voucher campaign"
         ..type="VOUCHER"
         ..effective=DateTime.parse("2019-05-03")
         ..expiry=DateTime.parse("2019-05-09")
@@ -330,9 +287,9 @@ void main() async {
         ..updatedAt=DateTime.parse("2019-06-01")
         ..metadata=<String,dynamic>{}
         ..category="test1";
-      var campaign2 = CampaignResponse('VoucherCampaign')
+      var campaign2 = VoucherCampaignResponse()
         ..id="dcf9c4d9-1d99-42d0-b4f2-5b631fe54ea2"
-        ..name="campaign name"
+        ..name="promotion campaign"
         ..type="VOUCHER"
         ..effective=DateTime.parse("2019-05-03")
         ..expiry=DateTime.parse("2019-05-09")

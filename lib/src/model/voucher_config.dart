@@ -167,6 +167,23 @@ class GiftConfig extends VoucherConfig {
   int get hashCode => hashObjects([type,redemption,codeConfig,product]);
 }
 
+@JsonSerializable(includeIfNull: false)
+class LoyaltyCardConfig extends VoucherConfig {
+  int points;
+
+  LoyaltyCardConfig(CodeConfig codeConfig, this.points)
+    : super(VoucherType.LOYALTY_CARD, codeConfig);
+
+  factory LoyaltyCardConfig.fromJson(Map<String, dynamic> json) => _$LoyaltyCardConfigFromJson(json);
+  Map<String, dynamic> toJson() => _$LoyaltyCardConfigToJson(this);  
+
+  bool operator == (o) => o is LoyaltyCardConfig && o.type == type && o.redemption == redemption
+    && o.codeConfig == codeConfig && o.points == points;
+    
+  int get hashCode => hashObjects([type,redemption,codeConfig,points]);
+
+}
+
 class VoucherConfigConverter<T> implements JsonConverter<T, Object> {
   const VoucherConfigConverter();
   @override
@@ -179,6 +196,8 @@ class VoucherConfigConverter<T> implements JsonConverter<T, Object> {
         return GiftConfig.fromJson(json) as T;
       else if (voucherType == _getSimpleName(VoucherType.PREPAID_CARD))
         return PrepaidCardConfig.fromJson(json) as T;
+      else if (voucherType == _getSimpleName(VoucherType.LOYALTY_CARD))
+        return LoyaltyCardConfig.fromJson(json) as T;
       else
         throw Exception("Unknown Voucher Type");  
     }

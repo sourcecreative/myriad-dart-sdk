@@ -1,36 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'campaign_service.dart';
+part of 'loyalty_service.dart';
 
 // **************************************************************************
 // ChopperGenerator
 // **************************************************************************
 
-class _$CampaignService extends CampaignService {
-  _$CampaignService([ChopperClient client]) {
+class _$LoyaltyService extends LoyaltyService {
+  _$LoyaltyService([ChopperClient client]) {
     if (client == null) return;
     this.client = client;
   }
 
-  final definitionType = CampaignService;
+  final definitionType = LoyaltyService;
 
-  Future<Response<VoucherCampaignResponse>> create(
-      VoucherCampaign<VoucherConfig> campaign) {
+  Future<Response<LoyaltyProgramResponse>> create(LoyaltyProgram campaign) {
     final $url = '/campaigns/';
     final $body = campaign;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client
-        .send<VoucherCampaignResponse, VoucherCampaignResponse>($request);
+        .send<LoyaltyProgramResponse, LoyaltyProgramResponse>($request);
   }
 
-  Future<Response<VoucherCampaignResponse>> findById(String id) {
+  Future<Response<LoyaltyProgramResponse>> findById(String id) {
     final $url = '/campaigns/${id}';
     final $request = Request('GET', $url, client.baseUrl);
     return client
-        .send<VoucherCampaignResponse, VoucherCampaignResponse>($request);
+        .send<LoyaltyProgramResponse, LoyaltyProgramResponse>($request);
   }
 
-  Future<Response<PaginatedCampaignResponse>> list(
+  Future<Response<PaginatedLoyaltyResponse>> list(
       {Map<String, dynamic> filter = const <String, dynamic>{},
       int page = 1,
       int size = 20}) {
@@ -39,30 +38,22 @@ class _$CampaignService extends CampaignService {
     $params.addAll(filter);
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client
-        .send<PaginatedCampaignResponse, PaginatedCampaignResponse>($request);
+        .send<PaginatedLoyaltyResponse, PaginatedLoyaltyResponse>($request);
   }
 
-  Future<Response<VoucherCampaignResponse>> update(
+  Future<Response<LoyaltyProgramResponse>> update(
       String id, UpdateCampaign campaign) {
     final $url = '/campaigns/${id}';
     final $body = campaign;
     final $request = Request('PUT', $url, client.baseUrl, body: $body);
     return client
-        .send<VoucherCampaignResponse, VoucherCampaignResponse>($request);
+        .send<LoyaltyProgramResponse, LoyaltyProgramResponse>($request);
   }
 
   Future<Response<void>> delete(String id) {
     final $url = '/campaigns/${id}';
     final $request = Request('DELETE', $url, client.baseUrl);
     return client.send<void, void>($request);
-  }
-
-  Future<Response<ImportVoucherResponse>> importVouchers(
-      String id, List<Voucher<VoucherConfig>> voucher) {
-    final $url = '/campaigns/${id}/vouchers/import';
-    final $body = voucher;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<ImportVoucherResponse, ImportVoucherResponse>($request);
   }
 
   Future<Response<RuleResponse>> addRule(String id, Rule rule) {

@@ -8,8 +8,15 @@ abstract class RedemptionService extends ChopperService {
   static RedemptionService newInstance([ChopperClient client]) => _$RedemptionService(client);
 
   @Post()
-  Future<Response<ValidationResponse>> validate(@Body() Validation validation);
+  Future<Response<VoucherValidationResponse>> validateVoucher(@Body() VoucherValidation validation);
 
   @Post()
-  Future<Response<RedemptionResponse>> redeem(@Body() Redemption redemption);
+  Future<Response<PromotionValidationResponse>> validatePromotion(@Body() Validation validation);
+
+  @Post()
+  Future<Response<VoucherRedemptionResponse>> redeemVoucher(@Body() VoucherRedemption redemption);
+
+  @Post()
+  Future<Response<PromotionRedemptionResponse>> redeemPromotion(@Body() PromotionRedemption redemption);
+
 }

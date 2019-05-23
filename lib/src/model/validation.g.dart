@@ -114,15 +114,14 @@ Map<String, dynamic> _$PromotionRedemptionToJson(PromotionRedemption instance) {
 
 VoucherValidationResponse<T> _$VoucherValidationResponseFromJson<T>(
     Map<String, dynamic> json) {
-  return VoucherValidationResponse<T>()
-    ..objType = json['objType'] as String
-    ..order = json['order'] == null
-        ? null
-        : OrderResponse.fromJson(json['order'] as Map<String, dynamic>)
-    ..voucher = json['voucher'] == null
-        ? null
-        : VoucherResponse.fromJson(json['voucher'] as Map<String, dynamic>)
-    ..valid = json['valid'] as bool;
+  return VoucherValidationResponse<T>(
+      json['voucher'] == null
+          ? null
+          : VoucherResponse.fromJson(json['voucher'] as Map<String, dynamic>),
+      json['order'] == null
+          ? null
+          : OrderResponse.fromJson(json['order'] as Map<String, dynamic>),
+      json['valid'] as bool);
 }
 
 Map<String, dynamic> _$VoucherValidationResponseToJson<T>(
@@ -135,29 +134,28 @@ Map<String, dynamic> _$VoucherValidationResponseToJson<T>(
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('order', instance.order);
-  writeNotNull('voucher', instance.voucher);
   writeNotNull('valid', instance.valid);
+  writeNotNull('voucher', instance.voucher);
   return val;
 }
 
-PromotionValidationResponse<T> _$PromotionValidationResponseFromJson<T>(
+PromotionValidationResponse _$PromotionValidationResponseFromJson(
     Map<String, dynamic> json) {
-  return PromotionValidationResponse<T>()
-    ..objType = json['objType'] as String
-    ..order = json['order'] == null
-        ? null
-        : OrderResponse.fromJson(json['order'] as Map<String, dynamic>)
-    ..tiers = (json['tiers'] as List)
-        ?.map((e) => e == null
-            ? null
-            : PromotionTierResponse.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+  return PromotionValidationResponse(
+      (json['tiers'] as List)
+          ?.map((e) => e == null
+              ? null
+              : TierResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['order'] == null
+          ? null
+          : OrderResponse.fromJson(json['order'] as Map<String, dynamic>),
+      json['valid'] as bool);
 }
 
-Map<String, dynamic> _$PromotionValidationResponseToJson<T>(
-    PromotionValidationResponse<T> instance) {
+Map<String, dynamic> _$PromotionValidationResponseToJson(
+    PromotionValidationResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -166,25 +164,25 @@ Map<String, dynamic> _$PromotionValidationResponseToJson<T>(
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('order', instance.order);
+  writeNotNull('valid', instance.valid);
   writeNotNull('tiers', instance.tiers);
   return val;
 }
 
 VoucherRedemptionResponse<T> _$VoucherRedemptionResponseFromJson<T>(
     Map<String, dynamic> json) {
-  return VoucherRedemptionResponse<T>()
-    ..objType = json['objType'] as String
-    ..order = json['order'] == null
-        ? null
-        : OrderResponse.fromJson(json['order'] as Map<String, dynamic>)
+  return VoucherRedemptionResponse<T>(
+      json['order'] == null
+          ? null
+          : OrderResponse.fromJson(json['order'] as Map<String, dynamic>),
+      json['voucher'] == null
+          ? null
+          : VoucherResponse.fromJson(json['voucher'] as Map<String, dynamic>),
+      json['valid'] as bool)
     ..id = json['id'] as String
     ..status = _$enumDecodeNullable(_$RedemptionStatusEnumMap, json['status'])
-    ..metadata = json['metadata'] as Map<String, dynamic>
-    ..voucher = json['voucher'] == null
-        ? null
-        : VoucherResponse.fromJson(json['voucher'] as Map<String, dynamic>);
+    ..metadata = json['metadata'] as Map<String, dynamic>;
 }
 
 Map<String, dynamic> _$VoucherRedemptionResponseToJson<T>(
@@ -197,8 +195,8 @@ Map<String, dynamic> _$VoucherRedemptionResponseToJson<T>(
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('order', instance.order);
+  writeNotNull('valid', instance.valid);
   writeNotNull('id', instance.id);
   writeNotNull('status', _$RedemptionStatusEnumMap[instance.status]);
   writeNotNull('metadata', instance.metadata);
@@ -233,17 +231,17 @@ const _$RedemptionStatusEnumMap = <RedemptionStatus, dynamic>{
 
 PromotionRedemptionResponse _$PromotionRedemptionResponseFromJson(
     Map<String, dynamic> json) {
-  return PromotionRedemptionResponse()
-    ..objType = json['objType'] as String
-    ..order = json['order'] == null
-        ? null
-        : OrderResponse.fromJson(json['order'] as Map<String, dynamic>)
+  return PromotionRedemptionResponse(
+      json['order'] == null
+          ? null
+          : OrderResponse.fromJson(json['order'] as Map<String, dynamic>),
+      json['tier'] == null
+          ? null
+          : TierResponse.fromJson(json['tier'] as Map<String, dynamic>),
+      json['valid'] as bool)
     ..id = json['id'] as String
     ..status = _$enumDecodeNullable(_$RedemptionStatusEnumMap, json['status'])
-    ..metadata = json['metadata'] as Map<String, dynamic>
-    ..tier = json['tier'] == null
-        ? null
-        : TierResponse.fromJson(json['tier'] as Map<String, dynamic>);
+    ..metadata = json['metadata'] as Map<String, dynamic>;
 }
 
 Map<String, dynamic> _$PromotionRedemptionResponseToJson(
@@ -256,8 +254,8 @@ Map<String, dynamic> _$PromotionRedemptionResponseToJson(
     }
   }
 
-  writeNotNull('objType', instance.objType);
   writeNotNull('order', instance.order);
+  writeNotNull('valid', instance.valid);
   writeNotNull('id', instance.id);
   writeNotNull('status', _$RedemptionStatusEnumMap[instance.status]);
   writeNotNull('metadata', instance.metadata);

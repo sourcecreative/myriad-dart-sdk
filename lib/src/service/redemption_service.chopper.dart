@@ -14,17 +14,39 @@ class _$RedemptionService extends RedemptionService {
 
   final definitionType = RedemptionService;
 
-  Future<Response<ValidationResponse>> validate(Validation validation) {
+  Future<Response<VoucherValidationResponse>> validateVoucher(
+      VoucherValidation validation) {
     final $url = '/redemptions/';
     final $body = validation;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<ValidationResponse, ValidationResponse>($request);
+    return client
+        .send<VoucherValidationResponse, VoucherValidationResponse>($request);
   }
 
-  Future<Response<RedemptionResponse>> redeem(Redemption redemption) {
+  Future<Response<PromotionValidationResponse>> validatePromotion(
+      Validation validation) {
+    final $url = '/redemptions/';
+    final $body = validation;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<PromotionValidationResponse,
+        PromotionValidationResponse>($request);
+  }
+
+  Future<Response<VoucherRedemptionResponse>> redeemVoucher(
+      VoucherRedemption redemption) {
     final $url = '/redemptions/';
     final $body = redemption;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<RedemptionResponse, RedemptionResponse>($request);
+    return client
+        .send<VoucherRedemptionResponse, VoucherRedemptionResponse>($request);
+  }
+
+  Future<Response<PromotionRedemptionResponse>> redeemPromotion(
+      PromotionRedemption redemption) {
+    final $url = '/redemptions/';
+    final $body = redemption;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<PromotionRedemptionResponse,
+        PromotionRedemptionResponse>($request);
   }
 }
