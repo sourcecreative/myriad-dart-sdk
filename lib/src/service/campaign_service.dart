@@ -1,10 +1,6 @@
 import 'package:chopper/chopper.dart';
 
 import 'package:myriad_dart_sdk/src/model/campaign.dart';
-import 'package:myriad_dart_sdk/src/model/response/campaign_response.dart';
-import 'package:myriad_dart_sdk/src/model/response/rule_response.dart';
-import 'package:myriad_dart_sdk/src/model/response/tier_response.dart';
-import 'package:myriad_dart_sdk/src/model/response/voucher_response.dart';
 import 'package:myriad_dart_sdk/src/model/rule.dart';
 import 'package:myriad_dart_sdk/src/model/tier.dart';
 import 'package:myriad_dart_sdk/src/model/voucher.dart';

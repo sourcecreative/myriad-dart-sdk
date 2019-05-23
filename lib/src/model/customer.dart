@@ -40,3 +40,21 @@ class Customer {
   int get hashCode => hashObjects([wallet,sourceId,name,email,phone,address]);
 
 }
+
+@JsonSerializable(includeIfNull: false)
+class CustomerResponse {
+  String id;
+  String sourceId;
+  String name;
+  String wallet;
+  String email;
+  String phone;
+  Address address;
+
+  CustomerResponse(this.id);
+
+  factory CustomerResponse.fromJson(Map<String, dynamic> json) => _$CustomerResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$CustomerResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$CustomerResponseFromJson;
+}

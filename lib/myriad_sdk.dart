@@ -11,14 +11,6 @@ export 'src/model/tier.dart';
 export 'src/model/validation.dart';
 export 'src/model/order.dart';
 
-export 'src/model/response/campaign_response.dart';
-export 'src/model/response/rule_response.dart';
-export 'src/model/response/tier_response.dart';
-export 'src/model/response/voucher_response.dart';
-export 'src/model/response/customer_response.dart';
-export 'src/model/response/order_response.dart';
-export 'src/model/response/validation_response.dart';
-
 export 'src/service/campaign_service.dart';
 export 'src/service/promotion_service.dart';
 export 'src/service/rule_service.dart';

@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:myriad_dart_sdk/src/model/response/validation_response.dart';
 import 'package:myriad_dart_sdk/src/model/validation.dart';
 
 part "redemption_service.chopper.dart";

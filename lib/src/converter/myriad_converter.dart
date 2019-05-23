@@ -1,12 +1,12 @@
 import 'package:chopper/chopper.dart';
+import 'package:myriad_dart_sdk/src/model/campaign.dart';
+import 'package:myriad_dart_sdk/src/model/customer.dart';
+import 'package:myriad_dart_sdk/src/model/order.dart';
+import 'package:myriad_dart_sdk/src/model/rule.dart';
+import 'package:myriad_dart_sdk/src/model/tier.dart';
+import 'package:myriad_dart_sdk/src/model/validation.dart';
+import 'package:myriad_dart_sdk/src/model/voucher.dart';
 
-import '../model/response/customer_response.dart';
-import '../model/response/order_response.dart';
-import '../model/response/validation_response.dart';
-import '../model/response/campaign_response.dart';
-import '../model/response/tier_response.dart';
-import '../model/response/rule_response.dart';
-import '../model/response/voucher_response.dart';
 import '../common/myriad_error.dart';
 
 //typedef JsonDeserialize<T> = T Function(Map<String,dynamic> json);

@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:myriad_dart_sdk/src/model/response/rule_response.dart';
 import 'package:myriad_dart_sdk/src/model/rule.dart';
 
 part "rule_service.chopper.dart";

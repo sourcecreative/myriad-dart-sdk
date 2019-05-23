@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:myriad_dart_sdk/src/model/response/voucher_response.dart';
 import 'package:myriad_dart_sdk/src/model/voucher.dart';
 import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 

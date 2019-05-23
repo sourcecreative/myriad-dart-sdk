@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:myriad_dart_sdk/src/model/response/tier_response.dart';
 import 'package:myriad_dart_sdk/src/model/tier.dart';
 
 part "promotion_service.chopper.dart";

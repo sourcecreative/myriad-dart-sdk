@@ -80,3 +80,41 @@ Map<String, dynamic> _$OrderItemToJson(OrderItem instance) {
   writeNotNull('metadata', instance.metadata);
   return val;
 }
+
+OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) {
+  return OrderResponse(json['id'] as String)
+    ..sourceId = json['sourceId'] as String
+    ..amount = json['amount'] as int
+    ..discount = json['discount'] as int
+    ..currency = json['currency'] == null
+        ? null
+        : Currency.fromJson(json['currency'] as Map<String, dynamic>)
+    ..items = (json['items'] as List)
+        ?.map((e) =>
+            e == null ? null : OrderItem.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..customer = json['customer'] == null
+        ? null
+        : CustomerResponse.fromJson(json['customer'] as Map<String, dynamic>)
+    ..metadata = json['metadata'] as Map<String, dynamic>;
+}
+
+Map<String, dynamic> _$OrderResponseToJson(OrderResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('sourceId', instance.sourceId);
+  writeNotNull('amount', instance.amount);
+  writeNotNull('discount', instance.discount);
+  writeNotNull('currency', instance.currency);
+  writeNotNull('items', instance.items);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('metadata', instance.metadata);
+  return val;
+}
