@@ -56,8 +56,8 @@ Map<String, dynamic> _$VoucherValidationToJson(VoucherValidation instance) {
   return val;
 }
 
-VoucherRedemption _$VoucherRedemptionFromJson(Map<String, dynamic> json) {
-  return VoucherRedemption(
+CouponRedemption _$CouponRedemptionFromJson(Map<String, dynamic> json) {
+  return CouponRedemption(
       json['voucherId'] as String,
       json['customer'] == null
           ? null
@@ -68,7 +68,7 @@ VoucherRedemption _$VoucherRedemptionFromJson(Map<String, dynamic> json) {
     ..metadata = json['metadata'] as Map<String, dynamic>;
 }
 
-Map<String, dynamic> _$VoucherRedemptionToJson(VoucherRedemption instance) {
+Map<String, dynamic> _$CouponRedemptionToJson(CouponRedemption instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -77,10 +77,34 @@ Map<String, dynamic> _$VoucherRedemptionToJson(VoucherRedemption instance) {
     }
   }
 
+  writeNotNull('voucherId', instance.voucherId);
   writeNotNull('order', instance.order);
   writeNotNull('customer', instance.customer);
   writeNotNull('metadata', instance.metadata);
+  return val;
+}
+
+GiftRedemption _$GiftRedemptionFromJson(Map<String, dynamic> json) {
+  return GiftRedemption(
+      json['voucherId'] as String,
+      json['customer'] == null
+          ? null
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>))
+    ..metadata = json['metadata'] as Map<String, dynamic>;
+}
+
+Map<String, dynamic> _$GiftRedemptionToJson(GiftRedemption instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
   writeNotNull('voucherId', instance.voucherId);
+  writeNotNull('customer', instance.customer);
+  writeNotNull('metadata', instance.metadata);
   return val;
 }
 
@@ -105,10 +129,10 @@ Map<String, dynamic> _$PromotionRedemptionToJson(PromotionRedemption instance) {
     }
   }
 
+  writeNotNull('promotionTierId', instance.promotionTierId);
   writeNotNull('order', instance.order);
   writeNotNull('customer', instance.customer);
   writeNotNull('metadata', instance.metadata);
-  writeNotNull('promotionTierId', instance.promotionTierId);
   return val;
 }
 

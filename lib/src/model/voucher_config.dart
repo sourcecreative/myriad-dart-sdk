@@ -1,10 +1,16 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:quiver/core.dart';
 
+import 'currency.dart';
+
 part 'voucher_config.g.dart';
 
 enum DiscountType {
 	AMOUNT, PERCENT, UNIT
+}
+
+enum VoucherType {
+  COUPON, GIFT, PREPAID_CARD, LOYALTY_CARD
 }
 
 abstract class Discount {
@@ -72,10 +78,6 @@ class CodeConfig {
   int get hashCode => hashObjects([length,charset,prefix,postfix,pattern]);
 }
 
-enum VoucherType {
-  COUPON, GIFT, PREPAID_CARD, LOYALTY_CARD
-}
-
 abstract class VoucherConfig {
   VoucherType type;
   int redemption;
@@ -140,9 +142,12 @@ class _DiscountConverter<T> implements JsonConverter<T, Object> {
 
 @JsonSerializable(includeIfNull: false)
 class PrepaidCardConfig extends VoucherConfig {
-  num amount;
-  PrepaidCardConfig(CodeConfig codeConfig, this.amount, [int redemption = 1])
-  : super(VoucherType.PREPAID_CARD, codeConfig, redemption);
+  int amount;
+  Currency currency;
+
+  PrepaidCardConfig(CodeConfig codeConfig, this.amount, {int redemption = 1, this.currency = Currency.USD})
+    : super(VoucherType.PREPAID_CARD, codeConfig, redemption);
+  
   factory PrepaidCardConfig.fromJson(Map<String, dynamic> json) => _$PrepaidCardConfigFromJson(json);
   Map<String, dynamic> toJson() => _$PrepaidCardConfigToJson(this);  
 
@@ -169,17 +174,23 @@ class GiftConfig extends VoucherConfig {
 
 @JsonSerializable(includeIfNull: false)
 class LoyaltyCardConfig extends VoucherConfig {
+  /// symbol of the points, e.g., 'WALMART COIN'
+  String symbol;
+  /// exchange rate per currency unit, e.g., if exchangeRate is 100 points per Currency.USD unit,
+  /// then 1000 points equals 10 US Dollars; exchangeRate and currency are optional attributes
+  int exchangeRate;
+  Currency currency;
 
-  LoyaltyCardConfig(CodeConfig codeConfig)
+  LoyaltyCardConfig(CodeConfig codeConfig,{this.symbol='', this.exchangeRate, this.currency = Currency.USD})
     : super(VoucherType.LOYALTY_CARD, codeConfig, 0);
 
   factory LoyaltyCardConfig.fromJson(Map<String, dynamic> json) => _$LoyaltyCardConfigFromJson(json);
   Map<String, dynamic> toJson() => _$LoyaltyCardConfigToJson(this);  
 
-  bool operator == (o) => o is LoyaltyCardConfig && o.type == type
-    && o.codeConfig == codeConfig;
+  bool operator == (o) => o is LoyaltyCardConfig && o.codeConfig == codeConfig 
+    && o.symbol == symbol && o.currency == currency && o.exchangeRate == exchangeRate;
     
-  int get hashCode => hash3(type,redemption,codeConfig);
+  int get hashCode => hash4(codeConfig,symbol,currency,exchangeRate);
 
 }
 

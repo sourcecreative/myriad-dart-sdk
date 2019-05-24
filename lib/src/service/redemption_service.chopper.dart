@@ -32,8 +32,8 @@ class _$RedemptionService extends RedemptionService {
         PromotionValidationResponse>($request);
   }
 
-  Future<Response<VoucherRedemptionResponse>> redeemVoucher(
-      VoucherRedemption redemption) {
+  Future<Response<VoucherRedemptionResponse>> redeemCoupon(
+      CouponRedemption redemption) {
     final $url = '/redemptions/';
     final $body = redemption;
     final $request = Request('POST', $url, client.baseUrl, body: $body);

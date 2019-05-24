@@ -57,6 +57,14 @@ class _$CampaignService extends CampaignService {
     return client.send<void, void>($request);
   }
 
+  Future<Response<VoucherResponse>> addVoucher(
+      String id, Voucher<VoucherConfig> voucher) {
+    final $url = '/campaigns/${id}/vouchers';
+    final $body = voucher;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<VoucherResponse, VoucherResponse>($request);
+  }
+
   Future<Response<ImportVoucherResponse>> importVouchers(
       String id, List<Voucher<VoucherConfig>> voucher) {
     final $url = '/campaigns/${id}/vouchers/import';

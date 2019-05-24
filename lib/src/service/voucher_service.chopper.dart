@@ -43,6 +43,13 @@ class _$VoucherService extends VoucherService {
     return client.send<VoucherResponse, VoucherResponse>($request);
   }
 
+  Future<Response<VoucherResponse>> enable(String id, bool enabled) {
+    final $url = '/vouchers/${id}';
+    final $body = enabled;
+    final $request = Request('PATCH', $url, client.baseUrl, body: $body);
+    return client.send<VoucherResponse, VoucherResponse>($request);
+  }
+
   Future<Response<void>> delete(String id) {
     final $url = '/vouchers/${id}';
     final $request = Request('DELETE', $url, client.baseUrl);

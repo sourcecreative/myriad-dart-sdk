@@ -51,12 +51,27 @@ class _$RuleService extends RuleService {
     return client.send<PaginatedRuleResponse, PaginatedRuleResponse>($request);
   }
 
-  Future<Response<RuleAssignmentResponse>> assign(
+  Future<Response<RuleAssignmentResponse>> createAssignment(
       String id, RuleAssignment assignment) {
     final $url = '/rules/${id}/assignments';
     final $body = assignment;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client
         .send<RuleAssignmentResponse, RuleAssignmentResponse>($request);
+  }
+
+  Future<Response<void>> removeAssignment(String id, String assignmentId) {
+    final $url = '/rules/${id}/assignments/${assignmentId}';
+    final $request = Request('POST', $url, client.baseUrl);
+    return client.send<void, void>($request);
+  }
+
+  Future<Response<PaginatedRuleAssignmentResponse>> listAssignments(String id,
+      {int page = 1, int size = 20}) {
+    final $url = '/rules/${id}/assignments';
+    final Map<String, dynamic> $params = {'page': page, 'size': size};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<PaginatedRuleAssignmentResponse,
+        PaginatedRuleAssignmentResponse>($request);
   }
 }

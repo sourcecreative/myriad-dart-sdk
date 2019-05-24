@@ -20,10 +20,14 @@ abstract class VoucherService extends ChopperService {
   @Put(path:"/{id}")
   Future<Response<VoucherResponse>> update(@Path() String id, @Body() UpdateVoucher campaign);
 
+  @Patch(path:"/{id}")
+  Future<Response<VoucherResponse>> enable(@Path() String id, @Body() bool enabled);
+
   @Delete(path:"/{id}")
   Future<Response<void>> delete(@Path() String id);
 
   @Post(path:"/import")
   Future<Response<ImportVoucherResponse>> import(@Body() List<Voucher> voucher);
 
+  
 }

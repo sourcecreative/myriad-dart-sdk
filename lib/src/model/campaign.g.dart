@@ -251,13 +251,8 @@ const _$CampaignStatusEnumMap = <CampaignStatus, dynamic>{
 };
 
 EarningRule _$EarningRuleFromJson(Map<String, dynamic> json) {
-  return EarningRule(
-      json['name'] as String,
-      json['event'] as String,
-      json['points'] as int,
-      json['rule'] == null
-          ? null
-          : Rule.fromJson(json['rule'] as Map<String, dynamic>));
+  return EarningRule(json['name'] as String, json['event'] as String,
+      json['points'] as int, json['ruleId'] as String);
 }
 
 Map<String, dynamic> _$EarningRuleToJson(EarningRule instance) {
@@ -271,8 +266,66 @@ Map<String, dynamic> _$EarningRuleToJson(EarningRule instance) {
 
   writeNotNull('name', instance.name);
   writeNotNull('event', instance.event);
-  writeNotNull('rule', instance.rule);
+  writeNotNull('ruleId', instance.ruleId);
   writeNotNull('points', instance.points);
+  return val;
+}
+
+EarningRuleResponse _$EarningRuleResponseFromJson(Map<String, dynamic> json) {
+  return EarningRuleResponse(
+      json['id'] as String,
+      json['name'] as String,
+      json['event'] as String,
+      json['points'] as int,
+      json['rule'] == null
+          ? null
+          : RuleResponse.fromJson(json['rule'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$EarningRuleResponseToJson(EarningRuleResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  writeNotNull('event', instance.event);
+  writeNotNull('points', instance.points);
+  writeNotNull('rule', instance.rule);
+  return val;
+}
+
+PaginatedEarningRuleResponse _$PaginatedEarningRuleResponseFromJson(
+    Map<String, dynamic> json) {
+  return PaginatedEarningRuleResponse(
+      (json['entries'] as List)
+          ?.map((e) => e == null
+              ? null
+              : EarningRuleResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['total'] as int,
+      page: json['page'] as int,
+      size: json['size'] as int);
+}
+
+Map<String, dynamic> _$PaginatedEarningRuleResponseToJson(
+    PaginatedEarningRuleResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('total', instance.total);
+  writeNotNull('page', instance.page);
+  writeNotNull('size', instance.size);
+  writeNotNull('entries', instance.entries);
   return val;
 }
 
@@ -299,6 +352,62 @@ Map<String, dynamic> _$RewardRuleToJson(RewardRule instance) {
   writeNotNull('pointsRequired', instance.pointsRequired);
   writeNotNull('rule', instance.rule);
   writeNotNull('campaignId', instance.campaignId);
+  return val;
+}
+
+RewardRuleResponse _$RewardRuleResponseFromJson(Map<String, dynamic> json) {
+  return RewardRuleResponse(
+      json['name'] as String,
+      json['pointsRequired'] as int,
+      json['rule'] == null
+          ? null
+          : Rule.fromJson(json['rule'] as Map<String, dynamic>),
+      json['campaignId'] as String);
+}
+
+Map<String, dynamic> _$RewardRuleResponseToJson(RewardRuleResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('pointsRequired', instance.pointsRequired);
+  writeNotNull('rule', instance.rule);
+  writeNotNull('campaignId', instance.campaignId);
+  return val;
+}
+
+PaginatedRewardRuleResponse _$PaginatedRewardRuleResponseFromJson(
+    Map<String, dynamic> json) {
+  return PaginatedRewardRuleResponse(
+      (json['entries'] as List)
+          ?.map((e) => e == null
+              ? null
+              : RewardRuleResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['total'] as int,
+      page: json['page'] as int,
+      size: json['size'] as int);
+}
+
+Map<String, dynamic> _$PaginatedRewardRuleResponseToJson(
+    PaginatedRewardRuleResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('total', instance.total);
+  writeNotNull('page', instance.page);
+  writeNotNull('size', instance.size);
+  writeNotNull('entries', instance.entries);
   return val;
 }
 

@@ -1,10 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'customer.dart';
 import 'voucher_config.dart';
 import 'rule.dart';
 import 'paginated_response.dart';
 
 part 'voucher.g.dart';
+
+enum VoucherStatus {
+  ISSUED, DISTRIBUTED, REDEEMED, DISABLED
+}
 
 @JsonSerializable(includeIfNull: false)
 class Voucher<T extends VoucherConfig> {
@@ -35,11 +40,6 @@ class UpdateVoucher {
   Map<String, dynamic> toJson() => _$UpdateVoucherToJson(this);
 }
 
-
-enum VoucherStatus {
-  ISSUED, DISTRIBUTED, REDEEMED, DISABLED
-}
-
 @JsonSerializable(includeIfNull: false)
 class VoucherResponse<T> {
   String id;
@@ -65,22 +65,6 @@ class VoucherResponse<T> {
 }
 
 @JsonSerializable(includeIfNull: false)
-class LoyaltyCardResponse extends VoucherResponse<LoyaltyCardConfig> {
-  // total points earned
-  int points;
-  // balance points
-  int balance;
-
-  LoyaltyCardResponse();
-
-  factory LoyaltyCardResponse.fromJson(Map<String, dynamic> json) => _$LoyaltyCardResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$LoyaltyCardResponseToJson(this);
-
-  static const dynamic Function(Map<String, dynamic>) deserialize = _$LoyaltyCardResponseFromJson;
-
-} 
-
-@JsonSerializable(includeIfNull: false)
 class PaginatedVoucherResponse extends PaginatedResponse<VoucherResponse> {
   PaginatedVoucherResponse(List<VoucherResponse> entries, int total, { int page=1, int size=20}) 
     : super(entries, total, page:page, size:size);
@@ -89,6 +73,48 @@ class PaginatedVoucherResponse extends PaginatedResponse<VoucherResponse> {
   Map<String, dynamic> toJson() => _$PaginatedVoucherResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedVoucherResponseFromJson;
+}
+
+@JsonSerializable(includeIfNull: false)
+class Membership extends Voucher<LoyaltyCardConfig> {
+  // member of the loyalty program
+  Customer customer;
+
+  Membership(this.customer, LoyaltyCardConfig config, 
+    {String code, Map<String,dynamic> metadata=const <String, dynamic>{}})
+    : super(config, code:code,metadata:metadata);
+
+  factory Membership.fromJson(Map<String, dynamic> json) => _$MembershipFromJson(json);
+  Map<String, dynamic> toJson() => _$MembershipToJson(this);
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class MembershipResponse extends VoucherResponse<LoyaltyCardConfig> {
+  CustomerResponse customer;
+  // total points earned
+  int points;
+  // balance points
+  int balance;
+
+  MembershipResponse();
+
+  factory MembershipResponse.fromJson(Map<String, dynamic> json) => _$MembershipResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$MembershipResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$MembershipResponseFromJson;
+
+} 
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedMembershipResponse extends PaginatedResponse<MembershipResponse> {
+  PaginatedMembershipResponse(List<VoucherResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+  factory PaginatedMembershipResponse.fromJson(Map<String, dynamic> json) => _$PaginatedMembershipResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedMembershipResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedMembershipResponseFromJson;
 }
 
 @JsonSerializable(includeIfNull: false)

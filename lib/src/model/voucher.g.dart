@@ -138,8 +138,68 @@ const _$VoucherStatusEnumMap = <VoucherStatus, dynamic>{
   VoucherStatus.DISABLED: 'DISABLED'
 };
 
-LoyaltyCardResponse _$LoyaltyCardResponseFromJson(Map<String, dynamic> json) {
-  return LoyaltyCardResponse()
+PaginatedVoucherResponse _$PaginatedVoucherResponseFromJson(
+    Map<String, dynamic> json) {
+  return PaginatedVoucherResponse(
+      (json['entries'] as List)
+          ?.map((e) => e == null
+              ? null
+              : VoucherResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['total'] as int,
+      page: json['page'] as int,
+      size: json['size'] as int);
+}
+
+Map<String, dynamic> _$PaginatedVoucherResponseToJson(
+    PaginatedVoucherResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('total', instance.total);
+  writeNotNull('page', instance.page);
+  writeNotNull('size', instance.size);
+  writeNotNull('entries', instance.entries);
+  return val;
+}
+
+Membership _$MembershipFromJson(Map<String, dynamic> json) {
+  return Membership(
+      json['customer'] == null
+          ? null
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>),
+      json['config'] == null
+          ? null
+          : LoyaltyCardConfig.fromJson(json['config'] as Map<String, dynamic>),
+      code: json['code'] as String,
+      metadata: json['metadata'] as Map<String, dynamic>)
+    ..category = json['category'] as String;
+}
+
+Map<String, dynamic> _$MembershipToJson(Membership instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('code', instance.code);
+  writeNotNull('config', instance.config);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('category', instance.category);
+  writeNotNull('customer', instance.customer);
+  return val;
+}
+
+MembershipResponse _$MembershipResponseFromJson(Map<String, dynamic> json) {
+  return MembershipResponse()
     ..id = json['id'] as String
     ..updatedAt = json['updatedAt'] == null
         ? null
@@ -156,11 +216,14 @@ LoyaltyCardResponse _$LoyaltyCardResponseFromJson(Map<String, dynamic> json) {
             e == null ? null : RuleResponse.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..metadata = json['metadata'] as Map<String, dynamic>
+    ..customer = json['customer'] == null
+        ? null
+        : CustomerResponse.fromJson(json['customer'] as Map<String, dynamic>)
     ..points = json['points'] as int
     ..balance = json['balance'] as int;
 }
 
-Map<String, dynamic> _$LoyaltyCardResponseToJson(LoyaltyCardResponse instance) {
+Map<String, dynamic> _$MembershipResponseToJson(MembershipResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -178,14 +241,15 @@ Map<String, dynamic> _$LoyaltyCardResponseToJson(LoyaltyCardResponse instance) {
   writeNotNull('config', instance.config);
   writeNotNull('rules', instance.rules);
   writeNotNull('metadata', instance.metadata);
+  writeNotNull('customer', instance.customer);
   writeNotNull('points', instance.points);
   writeNotNull('balance', instance.balance);
   return val;
 }
 
-PaginatedVoucherResponse _$PaginatedVoucherResponseFromJson(
+PaginatedMembershipResponse _$PaginatedMembershipResponseFromJson(
     Map<String, dynamic> json) {
-  return PaginatedVoucherResponse(
+  return PaginatedMembershipResponse(
       (json['entries'] as List)
           ?.map((e) => e == null
               ? null
@@ -196,8 +260,8 @@ PaginatedVoucherResponse _$PaginatedVoucherResponseFromJson(
       size: json['size'] as int);
 }
 
-Map<String, dynamic> _$PaginatedVoucherResponseToJson(
-    PaginatedVoucherResponse instance) {
+Map<String, dynamic> _$PaginatedMembershipResponseToJson(
+    PaginatedMembershipResponse instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

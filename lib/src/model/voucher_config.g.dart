@@ -162,8 +162,11 @@ PrepaidCardConfig _$PrepaidCardConfigFromJson(Map<String, dynamic> json) {
       json['codeConfig'] == null
           ? null
           : CodeConfig.fromJson(json['codeConfig'] as Map<String, dynamic>),
-      json['amount'] as num,
-      json['redemption'] as int)
+      json['amount'] as int,
+      redemption: json['redemption'] as int,
+      currency: json['currency'] == null
+          ? null
+          : Currency.fromJson(json['currency'] as Map<String, dynamic>))
     ..type = _$enumDecodeNullable(_$VoucherTypeEnumMap, json['type']);
 }
 
@@ -180,6 +183,7 @@ Map<String, dynamic> _$PrepaidCardConfigToJson(PrepaidCardConfig instance) {
   writeNotNull('redemption', instance.redemption);
   writeNotNull('codeConfig', instance.codeConfig);
   writeNotNull('amount', instance.amount);
+  writeNotNull('currency', instance.currency);
   return val;
 }
 
@@ -210,9 +214,15 @@ Map<String, dynamic> _$GiftConfigToJson(GiftConfig instance) {
 }
 
 LoyaltyCardConfig _$LoyaltyCardConfigFromJson(Map<String, dynamic> json) {
-  return LoyaltyCardConfig(json['codeConfig'] == null
-      ? null
-      : CodeConfig.fromJson(json['codeConfig'] as Map<String, dynamic>))
+  return LoyaltyCardConfig(
+      json['codeConfig'] == null
+          ? null
+          : CodeConfig.fromJson(json['codeConfig'] as Map<String, dynamic>),
+      symbol: json['symbol'] as String,
+      exchangeRate: json['exchangeRate'] as int,
+      currency: json['currency'] == null
+          ? null
+          : Currency.fromJson(json['currency'] as Map<String, dynamic>))
     ..type = _$enumDecodeNullable(_$VoucherTypeEnumMap, json['type'])
     ..redemption = json['redemption'] as int;
 }
@@ -229,5 +239,8 @@ Map<String, dynamic> _$LoyaltyCardConfigToJson(LoyaltyCardConfig instance) {
   writeNotNull('type', _$VoucherTypeEnumMap[instance.type]);
   writeNotNull('redemption', instance.redemption);
   writeNotNull('codeConfig', instance.codeConfig);
+  writeNotNull('symbol', instance.symbol);
+  writeNotNull('exchangeRate', instance.exchangeRate);
+  writeNotNull('currency', instance.currency);
   return val;
 }

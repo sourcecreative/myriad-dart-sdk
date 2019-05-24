@@ -37,7 +37,7 @@ void main() {
 
   test('PrepaidCardConfig json serialization', (){
     final config1 = PrepaidCardConfig(
-      CodeConfig(length:10,charset:CodeConfig.ALPHABETIC),100.20, 10);
+      CodeConfig(length:10,charset:CodeConfig.ALPHABETIC),100, redemption:10);
     final jsonConfig = _encode(config1);
     final config2 = PrepaidCardConfig.fromJson(json.decode(jsonConfig) as Map<String, dynamic>); 
     expect(config1.codeConfig, config2.codeConfig);

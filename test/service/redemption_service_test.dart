@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:myriad_dart_sdk/src/model/customer.dart';
 import 'package:usage/uuid/uuid.dart';
 import 'dart:convert';
 
@@ -117,7 +116,7 @@ void main() async {
   group('RedemptionService.redeem', () {
     test('redeem a voucher', () async {
       // request object
-      var redemption = VoucherRedemption(Uuid().generateV4(),
+      var redemption = CouponRedemption(Uuid().generateV4(),
         Customer(Uuid().generateV4(),sourceId:Uuid().generateV4(),name:'test'),
         Order(Currency.RMB,<OrderItem>[
           OrderItem('iPhoneX', 1, 800000),
@@ -160,7 +159,7 @@ void main() async {
         httpClient: httpClient
       );
 
-      var resp = await client.redemptions.redeemVoucher(redemption);
+      var resp = await client.redemptions.redeemCoupon(redemption);
       expect(json.encode(resp.body), equals(jsonResp));
       httpClient.close();
     });

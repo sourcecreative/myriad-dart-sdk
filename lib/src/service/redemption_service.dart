@@ -14,7 +14,7 @@ abstract class RedemptionService extends ChopperService {
   Future<Response<PromotionValidationResponse>> validatePromotion(@Body() Validation validation);
 
   @Post()
-  Future<Response<VoucherRedemptionResponse>> redeemVoucher(@Body() VoucherRedemption redemption);
+  Future<Response<VoucherRedemptionResponse>> redeemCoupon(@Body() CouponRedemption redemption);
 
   @Post()
   Future<Response<PromotionRedemptionResponse>> redeemPromotion(@Body() PromotionRedemption redemption);

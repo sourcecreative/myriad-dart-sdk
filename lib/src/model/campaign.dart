@@ -148,13 +148,38 @@ class EarningRule {
   // name of the event that triggers the rule, e.g., customer_subscribed
   String event;
   // validation rule to validate if condition is met to award points
-  Rule rule;
+  String ruleId;
   // earning points if rule is satisfied
   int points;
 
-  EarningRule(this.name,this.event,this.points, [this.rule]);
+  EarningRule(this.name,this.event,this.points, [this.ruleId]);
   factory EarningRule.fromJson(Map<String, dynamic> json) => _$EarningRuleFromJson(json);
   Map<String, dynamic> toJson() => _$EarningRuleToJson(this);
+}
+
+@JsonSerializable(includeIfNull: false)
+class EarningRuleResponse {
+  String id;
+  String name;
+  String event;
+  int points;
+  RuleResponse rule;
+
+  EarningRuleResponse(this.id, this.name,this.event,this.points, [this.rule]);
+  factory EarningRuleResponse.fromJson(Map<String, dynamic> json) => _$EarningRuleResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$EarningRuleResponseToJson(this);
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedEarningRuleResponse extends PaginatedResponse<EarningRuleResponse> {
+  PaginatedEarningRuleResponse(List<EarningRuleResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+ factory PaginatedEarningRuleResponse.fromJson(Map<String, dynamic> json) => _$PaginatedEarningRuleResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedEarningRuleResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedEarningRuleResponseFromJson;
 
 }
 
@@ -173,6 +198,35 @@ class RewardRule {
   Map<String, dynamic> toJson() => _$RewardRuleToJson(this);
 
 }
+
+@JsonSerializable(includeIfNull: false)
+class RewardRuleResponse {
+  String name;
+  // required points for the reward
+  int pointsRequired;
+  // validation rule to limit reward usage
+  Rule rule;
+  // the campaign that this reward is applied to
+  String campaignId;
+
+  RewardRuleResponse(this.name,this.pointsRequired, this.rule, this.campaignId);
+  factory RewardRuleResponse.fromJson(Map<String, dynamic> json) => _$RewardRuleResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$RewardRuleResponseToJson(this);
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedRewardRuleResponse extends PaginatedResponse<RewardRuleResponse> {
+  PaginatedRewardRuleResponse(List<RewardRuleResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+ factory PaginatedRewardRuleResponse.fromJson(Map<String, dynamic> json) => _$PaginatedRewardRuleResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedRewardRuleResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedRewardRuleResponseFromJson;
+
+}
+
 
 @JsonSerializable(includeIfNull: false)
 class LoyaltyProgramResponse<T> extends VoucherCampaignResponse<LoyaltyCardConfig> {

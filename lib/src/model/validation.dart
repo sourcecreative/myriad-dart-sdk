@@ -9,6 +9,10 @@ import 'tier.dart';
 
 part 'validation.g.dart';
 
+enum RedemptionStatus {
+  SUCCESS, FAILED
+}
+
 @JsonSerializable(includeIfNull: false)
 class Validation {
   Order order;
@@ -47,16 +51,18 @@ abstract class Redemption extends Validation {
 }
 
 @JsonSerializable(includeIfNull: false)
-class VoucherRedemption extends Redemption {
+class CouponRedemption {
   String voucherId;
+  Order order;
+  Customer customer;
+  Map<String,dynamic> metadata;
 
-  VoucherRedemption(this.voucherId, Customer customer, Order order)
-    : super(customer, order);
+  CouponRedemption(this.voucherId, this.customer, this.order);
 
-  factory VoucherRedemption.fromJson(Map<String, dynamic> json) => _$VoucherRedemptionFromJson(json);
-  Map<String, dynamic> toJson() => _$VoucherRedemptionToJson(this);
+  factory CouponRedemption.fromJson(Map<String, dynamic> json) => _$CouponRedemptionFromJson(json);
+  Map<String, dynamic> toJson() => _$CouponRedemptionToJson(this);
 
-  bool operator == (o) => o is VoucherRedemption && o.voucherId == voucherId 
+  bool operator == (o) => o is CouponRedemption && o.voucherId == voucherId 
     && o.order == order && o.customer == customer
     && mapsEqual(o.metadata, metadata);
   int get hashCode => hash4(voucherId,order,customer,metadata);
@@ -64,11 +70,30 @@ class VoucherRedemption extends Redemption {
 }
 
 @JsonSerializable(includeIfNull: false)
-class PromotionRedemption extends Redemption {
-  String promotionTierId;
+class GiftRedemption {
+  String voucherId;
+  Customer customer;
+  Map<String,dynamic> metadata;
 
-  PromotionRedemption(this.promotionTierId, Customer customer, Order order)
-    : super(customer, order);
+  GiftRedemption(this.voucherId, this.customer);
+
+  factory GiftRedemption.fromJson(Map<String, dynamic> json) => _$GiftRedemptionFromJson(json);
+  Map<String, dynamic> toJson() => _$GiftRedemptionToJson(this);
+
+  bool operator == (o) => o is GiftRedemption && o.voucherId == voucherId 
+    && o.customer == customer && mapsEqual(o.metadata, metadata);
+  int get hashCode => hash3(voucherId,customer,metadata);
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class PromotionRedemption {
+  String promotionTierId;
+  Order order;
+  Customer customer;
+  Map<String,dynamic> metadata;
+
+  PromotionRedemption(this.promotionTierId, this.customer, this.order);
 
   factory PromotionRedemption.fromJson(Map<String, dynamic> json) => _$PromotionRedemptionFromJson(json);
   Map<String, dynamic> toJson() => _$PromotionRedemptionToJson(this);
@@ -114,10 +139,6 @@ class PromotionValidationResponse extends ValidationResponse {
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$PromotionValidationResponseFromJson;
 
-}
-
-enum RedemptionStatus {
-  SUCCESS, FAILED
 }
 
 abstract class RedemptionResponse extends ValidationResponse {
