@@ -1,6 +1,7 @@
 import 'package:chopper/chopper.dart';
 
 import 'package:myriad_dart_sdk/src/model/campaign.dart';
+import 'package:myriad_dart_sdk/src/model/distribution.dart';
 import 'package:myriad_dart_sdk/src/model/voucher.dart';
 import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 
@@ -32,4 +33,14 @@ abstract class CampaignService extends ChopperService {
   @Post(path:"/{id}/vouchers/import")
   Future<Response<ImportVoucherResponse>> importVouchers(@Path() String id, @Body() List<Voucher<VoucherConfig>> voucher);
 
+  @Get(path:"/{id}/distributions")
+  Future<Response<PaginatedVoucherDistributionResponse>> listDistributions(@Path() String id, {
+    @Query() int page = 1, @Query() int size = 20});
+
+  @Post(path:"/{id}/distributions")
+  Future<Response<VoucherDistributionResponse>> distribute(@Path() String id, @Body() DistributeVoucher distribution);
+
+  /// Generates and distributes vouchers
+  @Post(path:"/{id}/distributions")
+  Future<Response<DistributeBatchVouchersResponse>> distributeVouchers(@Path() String id, @Body() DistributeBatchVouchers distributions);
 }

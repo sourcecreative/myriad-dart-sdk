@@ -3,7 +3,9 @@ import 'package:chopper/chopper.dart';
 
 import 'package:myriad_dart_sdk/src/converter/myriad_converter.dart';
 import 'package:myriad_dart_sdk/src/service/campaign_service.dart';
+import 'package:myriad_dart_sdk/src/service/customer_service.dart';
 import 'package:myriad_dart_sdk/src/service/loyalty_service.dart';
+import 'package:myriad_dart_sdk/src/service/order_service.dart';
 
 import 'package:myriad_dart_sdk/src/service/promotion_service.dart';
 import 'package:myriad_dart_sdk/src/service/rule_service.dart';
@@ -48,7 +50,9 @@ class MyriadClient {
             VoucherService.newInstance(),
             TierService.newInstance(),
             RuleService.newInstance(),
-            RedemptionService.newInstance()
+            RedemptionService.newInstance(),
+            CustomerService.newInstance(),
+            OrderService.newInstance()
           ],
           interceptors: [
             HttpLoggingInterceptor(),
@@ -73,6 +77,8 @@ class MyriadClient {
   TierService get tiers => _chopper.getService<TierService>();
   RuleService get rules => _chopper.getService<RuleService>();
   RedemptionService get redemptions => _chopper.getService<RedemptionService>();
+  CustomerService get customers => _chopper.getService<CustomerService>();
+  OrderService get orders => _chopper.getService<OrderService>();
 }
 
 

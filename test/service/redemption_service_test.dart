@@ -12,7 +12,7 @@ void main() async {
       // request object
       var validation = VoucherValidation(Uuid().generateV4(),
         Customer(Uuid().generateV4(),sourceId:Uuid().generateV4(),name:'test'),
-        Order(Currency.RMB,<OrderItem>[
+        Order(<OrderItem>[
           OrderItem('iPhoneX', 1, 800000),
           OrderItem('iPad', 1, 400000)
         ])
@@ -59,7 +59,7 @@ void main() async {
       // request object
       var validation = Validation(
         Customer(Uuid().generateV4(),sourceId:Uuid().generateV4(),name:'test'),
-        Order(Currency.RMB,<OrderItem>[
+        Order(<OrderItem>[
           OrderItem('iPhoneX', 1, 800000),
           OrderItem('iPad', 1, 400000)
         ])
@@ -118,7 +118,7 @@ void main() async {
       // request object
       var redemption = CouponRedemption(Uuid().generateV4(),
         Customer(Uuid().generateV4(),sourceId:Uuid().generateV4(),name:'test'),
-        Order(Currency.RMB,<OrderItem>[
+        Order(<OrderItem>[
           OrderItem('iPhoneX', 1, 800000),
           OrderItem('iPad', 1, 400000)
         ])
@@ -168,7 +168,7 @@ void main() async {
       // request object
       var redemption = PromotionRedemption(Uuid().generateV4(),
         Customer(Uuid().generateV4(),sourceId:Uuid().generateV4(),name:'test'),
-        Order(Currency.RMB,<OrderItem>[
+        Order(<OrderItem>[
           OrderItem('iPhoneX', 1, 800000),
           OrderItem('iPad', 1, 400000)
         ])

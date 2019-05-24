@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myriad_dart_sdk/src/model/paginated_response.dart';
 import 'package:quiver/collection.dart';
 import 'package:quiver/core.dart';
 
@@ -16,7 +17,7 @@ class Order {
   List<OrderItem> items;
   Map<String, dynamic> metadata;
 
-  Order(this.currency,this.items, {this.sourceId,this.metadata}) {
+  Order(this.items, {this.currency = Currency.USD,this.sourceId,this.metadata}) {
     items.forEach((item) => amount += item.amount);
   }
 
@@ -27,6 +28,19 @@ class Order {
     && listsEqual(o.items,items) && o.sourceId == sourceId && mapsEqual(o.metadata,metadata);
 
   int get hashCode => hash3(currency,items,metadata);
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class CreateOrderRequest extends Order {
+  Customer customer;
+
+  CreateOrderRequest(this.customer, List<OrderItem> items, 
+    {Currency currency = Currency.USD, String sourceId, Map<String,dynamic> metadata} )
+    : super(items, currency:currency, sourceId:sourceId, metadata:metadata);
+
+  factory CreateOrderRequest.fromJson(Map<String, dynamic> json) => _$CreateOrderRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$CreateOrderRequestToJson(this);
 
 }
 
@@ -77,5 +91,17 @@ class OrderResponse {
   Map<String, dynamic> toJson() => _$OrderResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$OrderResponseFromJson;
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedOrderResponse extends PaginatedResponse<OrderResponse> {
+  PaginatedOrderResponse(List<OrderResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+ factory PaginatedOrderResponse.fromJson(Map<String, dynamic> json) => _$PaginatedOrderResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedOrderResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedOrderResponseFromJson;
 
 }

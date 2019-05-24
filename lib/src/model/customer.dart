@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myriad_dart_sdk/src/model/paginated_response.dart';
 import 'package:quiver/core.dart';
 
 part 'customer.g.dart';
@@ -29,6 +30,7 @@ class Customer {
   String email;
   String phone;
   Address address;
+  Map<String,dynamic> metadata;
 
   Customer(this.wallet,{this.sourceId,this.name, this.email, this.phone, this.address});
 
@@ -50,6 +52,7 @@ class CustomerResponse {
   String email;
   String phone;
   Address address;
+  Map<String,dynamic> metadata;
 
   CustomerResponse(this.id);
 
@@ -57,4 +60,42 @@ class CustomerResponse {
   Map<String, dynamic> toJson() => _$CustomerResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$CustomerResponseFromJson;
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedCustomerResponse extends PaginatedResponse<CustomerResponse> {
+  PaginatedCustomerResponse(List<CustomerResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+ factory PaginatedCustomerResponse.fromJson(Map<String, dynamic> json) => _$PaginatedCustomerResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedCustomerResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedCustomerResponseFromJson;
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class BatchUpdateCustomerRequest {
+  // metadata for all customers
+  Map<String,dynamic> metadata;
+  List<Customer> customers;
+
+  BatchUpdateCustomerRequest(List<Customer> customers,{this.metadata=const<String,dynamic>{}});
+
+  factory BatchUpdateCustomerRequest.fromJson(Map<String, dynamic> json) => _$BatchUpdateCustomerRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$BatchUpdateCustomerRequestToJson(this);
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class BatchUpdateCustomerResponse {
+  List<CustomerResponse> customers;
+
+  BatchUpdateCustomerResponse(this.customers);
+
+  factory BatchUpdateCustomerResponse.fromJson(Map<String, dynamic> json) => _$BatchUpdateCustomerResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$BatchUpdateCustomerResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$BatchUpdateCustomerResponseFromJson;
+
 }

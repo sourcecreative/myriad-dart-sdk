@@ -39,7 +39,8 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) {
       phone: json['phone'] as String,
       address: json['address'] == null
           ? null
-          : Address.fromJson(json['address'] as Map<String, dynamic>));
+          : Address.fromJson(json['address'] as Map<String, dynamic>))
+    ..metadata = json['metadata'] as Map<String, dynamic>;
 }
 
 Map<String, dynamic> _$CustomerToJson(Customer instance) {
@@ -57,6 +58,7 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) {
   writeNotNull('email', instance.email);
   writeNotNull('phone', instance.phone);
   writeNotNull('address', instance.address);
+  writeNotNull('metadata', instance.metadata);
   return val;
 }
 
@@ -69,7 +71,8 @@ CustomerResponse _$CustomerResponseFromJson(Map<String, dynamic> json) {
     ..phone = json['phone'] as String
     ..address = json['address'] == null
         ? null
-        : Address.fromJson(json['address'] as Map<String, dynamic>);
+        : Address.fromJson(json['address'] as Map<String, dynamic>)
+    ..metadata = json['metadata'] as Map<String, dynamic>;
 }
 
 Map<String, dynamic> _$CustomerResponseToJson(CustomerResponse instance) {
@@ -88,5 +91,84 @@ Map<String, dynamic> _$CustomerResponseToJson(CustomerResponse instance) {
   writeNotNull('email', instance.email);
   writeNotNull('phone', instance.phone);
   writeNotNull('address', instance.address);
+  writeNotNull('metadata', instance.metadata);
+  return val;
+}
+
+PaginatedCustomerResponse _$PaginatedCustomerResponseFromJson(
+    Map<String, dynamic> json) {
+  return PaginatedCustomerResponse(
+      (json['entries'] as List)
+          ?.map((e) => e == null
+              ? null
+              : CustomerResponse.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      json['total'] as int,
+      page: json['page'] as int,
+      size: json['size'] as int);
+}
+
+Map<String, dynamic> _$PaginatedCustomerResponseToJson(
+    PaginatedCustomerResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('total', instance.total);
+  writeNotNull('page', instance.page);
+  writeNotNull('size', instance.size);
+  writeNotNull('entries', instance.entries);
+  return val;
+}
+
+BatchUpdateCustomerRequest _$BatchUpdateCustomerRequestFromJson(
+    Map<String, dynamic> json) {
+  return BatchUpdateCustomerRequest(
+      (json['customers'] as List)
+          ?.map((e) =>
+              e == null ? null : Customer.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      metadata: json['metadata'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BatchUpdateCustomerRequestToJson(
+    BatchUpdateCustomerRequest instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('customers', instance.customers);
+  return val;
+}
+
+BatchUpdateCustomerResponse _$BatchUpdateCustomerResponseFromJson(
+    Map<String, dynamic> json) {
+  return BatchUpdateCustomerResponse((json['customers'] as List)
+      ?.map((e) => e == null
+          ? null
+          : CustomerResponse.fromJson(e as Map<String, dynamic>))
+      ?.toList());
+}
+
+Map<String, dynamic> _$BatchUpdateCustomerResponseToJson(
+    BatchUpdateCustomerResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('customers', instance.customers);
   return val;
 }

@@ -72,4 +72,33 @@ class _$CampaignService extends CampaignService {
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<ImportVoucherResponse, ImportVoucherResponse>($request);
   }
+
+  Future<Response<PaginatedVoucherDistributionResponse>> listDistributions(
+      String id,
+      {int page = 1,
+      int size = 20}) {
+    final $url = '/campaigns/${id}/distributions';
+    final Map<String, dynamic> $params = {'page': page, 'size': size};
+    final $request = Request('GET', $url, client.baseUrl, parameters: $params);
+    return client.send<PaginatedVoucherDistributionResponse,
+        PaginatedVoucherDistributionResponse>($request);
+  }
+
+  Future<Response<VoucherDistributionResponse>> distribute(
+      String id, DistributeVoucher distribution) {
+    final $url = '/campaigns/${id}/distributions';
+    final $body = distribution;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<VoucherDistributionResponse,
+        VoucherDistributionResponse>($request);
+  }
+
+  Future<Response<DistributeBatchVouchersResponse>> distributeVouchers(
+      String id, DistributeBatchVouchers distributions) {
+    final $url = '/campaigns/${id}/distributions';
+    final $body = distributions;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<DistributeBatchVouchersResponse,
+        DistributeBatchVouchersResponse>($request);
+  }
 }

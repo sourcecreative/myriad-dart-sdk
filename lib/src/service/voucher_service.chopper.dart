@@ -63,4 +63,13 @@ class _$VoucherService extends VoucherService {
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<ImportVoucherResponse, ImportVoucherResponse>($request);
   }
+
+  Future<Response<VoucherDistributionResponse>> distribute(
+      String id, DistributeVoucher distribution) {
+    final $url = '/vouchers/${id}/distributions';
+    final $body = distribution;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<VoucherDistributionResponse,
+        VoucherDistributionResponse>($request);
+  }
 }

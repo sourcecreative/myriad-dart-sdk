@@ -85,6 +85,7 @@ final myriadConverter = MyriadConverter(
     "PromotionCampaignResponse": PromotionCampaignResponse.deserialize,
     "LoyaltyProgramResponse": LoyaltyProgramResponse.deserialize,
     "CustomerResponse": CustomerResponse.deserialize, 
+    "BatchUpdateCustomerResponse": BatchUpdateCustomerResponse.deserialize,
     "OrderResponse": OrderResponse.deserialize,
     "RuleResponse": RuleResponse.deserialize,
     "TierResponse": TierResponse.deserialize,
@@ -99,6 +100,9 @@ final myriadConverter = MyriadConverter(
     "PaginatedRuleResponse": PaginatedRuleResponse.deserialize,
     "PaginatedPromotionResponse": PaginatedPromotionResponse.deserialize,
     "PaginatedLoyaltyResponse": PaginatedLoyaltyResponse.deserialize,
-    "PaginatedCampaignResponse": PaginatedCampaignResponse.deserialize            
+    "PaginatedCampaignResponse": PaginatedCampaignResponse.deserialize,
+    "PaginatedOrderResponse": PaginatedOrderResponse.deserialize,
+    "PaginatedCustomerResponse": PaginatedCustomerResponse.deserialize            
+
   }
 );

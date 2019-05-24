@@ -1,4 +1,5 @@
 import 'package:chopper/chopper.dart';
+import 'package:myriad_dart_sdk/src/model/distribution.dart';
 import 'package:myriad_dart_sdk/src/model/voucher.dart';
 import 'package:myriad_dart_sdk/src/model/voucher_config.dart';
 
@@ -29,5 +30,9 @@ abstract class VoucherService extends ChopperService {
   @Post(path:"/import")
   Future<Response<ImportVoucherResponse>> import(@Body() List<Voucher> voucher);
 
-  
+  /// Distribute a voucher to a customer
+  /// @id voucher id
+  /// @distribution a distribution request
+  @Post(path:"/{id}/distributions")
+  Future<Response<VoucherDistributionResponse>> distribute(@Path() String id, @Body() DistributeVoucher distribution);
 }
