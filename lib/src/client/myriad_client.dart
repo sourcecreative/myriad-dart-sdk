@@ -10,6 +10,7 @@ import 'package:myriad_dart_sdk/src/service/order_service.dart';
 import 'package:myriad_dart_sdk/src/service/promotion_service.dart';
 import 'package:myriad_dart_sdk/src/service/rule_service.dart';
 import 'package:myriad_dart_sdk/src/service/redemption_service.dart';
+import 'package:myriad_dart_sdk/src/service/segment_service.dart';
 import 'package:myriad_dart_sdk/src/service/voucher_service.dart';
 
 class ConnectionOptions {
@@ -46,13 +47,15 @@ class MyriadClient {
           baseUrl: options.baseUrl,
           services:[
             CampaignService.newInstance(),
-            PromotionService.newInstance(),
-            VoucherService.newInstance(),
-            TierService.newInstance(),
-            RuleService.newInstance(),
-            RedemptionService.newInstance(),
             CustomerService.newInstance(),
-            OrderService.newInstance()
+            LoyaltyService.newInstance(),
+            OrderService.newInstance(),
+            PromotionService.newInstance(),
+            RedemptionService.newInstance(),
+            RuleService.newInstance(),
+            SegmentService.newInstance(),
+            TierService.newInstance(),
+            VoucherService.newInstance()
           ],
           interceptors: [
             HttpLoggingInterceptor(),
@@ -71,14 +74,15 @@ class MyriadClient {
 
   // helper methods for services
   CampaignService get campaigns => _chopper.getService<CampaignService>();
-  PromotionService get promotions => _chopper.getService<PromotionService>();
-  LoyaltyService get loyalties => _chopper.getService<LoyaltyService>();
-  VoucherService get vouchers => _chopper.getService<VoucherService>();
-  TierService get tiers => _chopper.getService<TierService>();
-  RuleService get rules => _chopper.getService<RuleService>();
-  RedemptionService get redemptions => _chopper.getService<RedemptionService>();
   CustomerService get customers => _chopper.getService<CustomerService>();
+  LoyaltyService get loyalties => _chopper.getService<LoyaltyService>();
   OrderService get orders => _chopper.getService<OrderService>();
+  PromotionService get promotions => _chopper.getService<PromotionService>();
+  RedemptionService get redemptions => _chopper.getService<RedemptionService>();
+  RuleService get rules => _chopper.getService<RuleService>();
+  SegmentService get segments => _chopper.getService<SegmentService>();
+  TierService get tiers => _chopper.getService<TierService>();
+  VoucherService get vouchers => _chopper.getService<VoucherService>();
 }
 
 
