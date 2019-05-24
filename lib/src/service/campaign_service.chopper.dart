@@ -64,25 +64,4 @@ class _$CampaignService extends CampaignService {
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<ImportVoucherResponse, ImportVoucherResponse>($request);
   }
-
-  Future<Response<RuleResponse>> addRule(String id, Rule rule) {
-    final $url = '/campaigns/${id}/rules';
-    final $body = rule;
-    final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<RuleResponse, RuleResponse>($request);
-  }
-
-  Future<Response<RuleResponse>> updateRule(
-      String id, String ruleId, Rule rule) {
-    final $url = '/campaigns/${id}/rules/${ruleId}';
-    final $body = rule;
-    final $request = Request('PUT', $url, client.baseUrl, body: $body);
-    return client.send<RuleResponse, RuleResponse>($request);
-  }
-
-  Future<Response<void>> removeRule(String id, String ruleId) {
-    final $url = '/campaigns/${id}/rules/${ruleId}';
-    final $request = Request('DELETE', $url, client.baseUrl);
-    return client.send<void, void>($request);
-  }
 }

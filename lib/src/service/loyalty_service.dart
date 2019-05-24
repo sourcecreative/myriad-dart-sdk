@@ -26,6 +26,9 @@ abstract class LoyaltyService extends ChopperService {
   Future<Response<void>> delete(@Path() String id);
 
   /// Operations for Redemption Rules for Voucher Campaigns
+  /// 
+  
+  /// Add a redemption rule to a promotion
   @Post(path:"/{id}/rules")
   Future<Response<RuleResponse>> addRule(@Path() String id, @Body() Rule rule);
 

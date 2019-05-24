@@ -19,10 +19,6 @@ VoucherCampaign<T> _$VoucherCampaignFromJson<T extends VoucherConfig>(
           ? null
           : VoucherConfigConverter<T>().fromJson(json['config']),
       autoUpdate: json['autoUpdate'] as bool,
-      rules: (json['rules'] as List)
-          ?.map((e) =>
-              e == null ? null : Rule.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
       description: json['description'] as String,
       category: json['category'] as String,
       metadata: json['metadata'] as Map<String, dynamic>)
@@ -53,7 +49,6 @@ Map<String, dynamic> _$VoucherCampaignToJson<T extends VoucherConfig>(
       instance.config == null
           ? null
           : VoucherConfigConverter<T>().toJson(instance.config));
-  writeNotNull('rules', instance.rules);
   return val;
 }
 
@@ -95,14 +90,6 @@ LoyaltyProgram _$LoyaltyProgramFromJson(Map<String, dynamic> json) {
           ? null
           : LoyaltyCardConfig.fromJson(json['config'] as Map<String, dynamic>),
       autoUpdate: json['autoUpdate'] as bool,
-      rules: (json['rules'] as List)
-          ?.map((e) =>
-              e == null ? null : Rule.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      earningRules: (json['earningRules'] as List)
-          ?.map((e) =>
-              e == null ? null : Rule.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
       description: json['description'] as String,
       category: json['category'] as String,
       metadata: json['metadata'] as Map<String, dynamic>)
@@ -128,8 +115,6 @@ Map<String, dynamic> _$LoyaltyProgramToJson(LoyaltyProgram instance) {
   writeNotNull('totalSupply', instance.totalSupply);
   writeNotNull('autoUpdate', instance.autoUpdate);
   writeNotNull('config', instance.config);
-  writeNotNull('rules', instance.rules);
-  writeNotNull('earningRules', instance.earningRules);
   return val;
 }
 
@@ -265,6 +250,58 @@ const _$CampaignStatusEnumMap = <CampaignStatus, dynamic>{
   CampaignStatus.ARCHIVED: 'ARCHIVED'
 };
 
+EarningRule _$EarningRuleFromJson(Map<String, dynamic> json) {
+  return EarningRule(
+      json['name'] as String,
+      json['event'] as String,
+      json['points'] as int,
+      json['rule'] == null
+          ? null
+          : Rule.fromJson(json['rule'] as Map<String, dynamic>));
+}
+
+Map<String, dynamic> _$EarningRuleToJson(EarningRule instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('event', instance.event);
+  writeNotNull('rule', instance.rule);
+  writeNotNull('points', instance.points);
+  return val;
+}
+
+RewardRule _$RewardRuleFromJson(Map<String, dynamic> json) {
+  return RewardRule(
+      json['name'] as String,
+      json['pointsRequired'] as int,
+      json['rule'] == null
+          ? null
+          : Rule.fromJson(json['rule'] as Map<String, dynamic>),
+      json['campaignId'] as String);
+}
+
+Map<String, dynamic> _$RewardRuleToJson(RewardRule instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('pointsRequired', instance.pointsRequired);
+  writeNotNull('rule', instance.rule);
+  writeNotNull('campaignId', instance.campaignId);
+  return val;
+}
+
 LoyaltyProgramResponse<T> _$LoyaltyProgramResponseFromJson<T>(
     Map<String, dynamic> json) {
   return LoyaltyProgramResponse<T>()
@@ -293,7 +330,11 @@ LoyaltyProgramResponse<T> _$LoyaltyProgramResponseFromJson<T>(
         ?.toList()
     ..earningRules = (json['earningRules'] as List)
         ?.map((e) =>
-            e == null ? null : RuleResponse.fromJson(e as Map<String, dynamic>))
+            e == null ? null : EarningRule.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..rewardRules = (json['rewardRules'] as List)
+        ?.map((e) =>
+            e == null ? null : RewardRule.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
@@ -321,6 +362,7 @@ Map<String, dynamic> _$LoyaltyProgramResponseToJson<T>(
   writeNotNull('config', instance.config);
   writeNotNull('rules', instance.rules);
   writeNotNull('earningRules', instance.earningRules);
+  writeNotNull('rewardRules', instance.rewardRules);
   return val;
 }
 

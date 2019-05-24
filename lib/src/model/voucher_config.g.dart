@@ -210,11 +210,9 @@ Map<String, dynamic> _$GiftConfigToJson(GiftConfig instance) {
 }
 
 LoyaltyCardConfig _$LoyaltyCardConfigFromJson(Map<String, dynamic> json) {
-  return LoyaltyCardConfig(
-      json['codeConfig'] == null
-          ? null
-          : CodeConfig.fromJson(json['codeConfig'] as Map<String, dynamic>),
-      json['points'] as int)
+  return LoyaltyCardConfig(json['codeConfig'] == null
+      ? null
+      : CodeConfig.fromJson(json['codeConfig'] as Map<String, dynamic>))
     ..type = _$enumDecodeNullable(_$VoucherTypeEnumMap, json['type'])
     ..redemption = json['redemption'] as int;
 }
@@ -231,6 +229,5 @@ Map<String, dynamic> _$LoyaltyCardConfigToJson(LoyaltyCardConfig instance) {
   writeNotNull('type', _$VoucherTypeEnumMap[instance.type]);
   writeNotNull('redemption', instance.redemption);
   writeNotNull('codeConfig', instance.codeConfig);
-  writeNotNull('points', instance.points);
   return val;
 }

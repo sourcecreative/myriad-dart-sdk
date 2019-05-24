@@ -50,4 +50,13 @@ class _$RuleService extends RuleService {
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<PaginatedRuleResponse, PaginatedRuleResponse>($request);
   }
+
+  Future<Response<RuleAssignmentResponse>> assign(
+      String id, RuleAssignment assignment) {
+    final $url = '/rules/${id}/assignments';
+    final $body = assignment;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client
+        .send<RuleAssignmentResponse, RuleAssignmentResponse>($request);
+  }
 }

@@ -30,18 +30,4 @@ abstract class CampaignService extends ChopperService {
   @Post(path:"/{id}/vouchers/import")
   Future<Response<ImportVoucherResponse>> importVouchers(@Path() String id, @Body() List<Voucher<VoucherConfig>> voucher);
 
-  /// Operations for Redemption Rules for Voucher Campaigns
-  @Post(path:"/{id}/rules")
-  Future<Response<RuleResponse>> addRule(@Path() String id, @Body() Rule rule);
-
-  /// Update a given validation rule of a given Campaign
-  /// @id the campaign identifier
-  /// @ruleId identifier of the rule to be updated
-  /// @rule rule data to be updated
-  @Put(path:"/{id}/rules/{ruleId}")
-  Future<Response<RuleResponse>> updateRule(@Path("id")String id, @Path("ruleId")String ruleId, @Body() Rule rule);
-
-  @Delete(path:"/{id}/rules/{ruleId}")
-  Future<Response<void>> removeRule(@Path("id") String id, @Path("ruleId") String ruleId);
-
 }

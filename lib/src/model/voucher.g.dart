@@ -138,6 +138,51 @@ const _$VoucherStatusEnumMap = <VoucherStatus, dynamic>{
   VoucherStatus.DISABLED: 'DISABLED'
 };
 
+LoyaltyCardResponse _$LoyaltyCardResponseFromJson(Map<String, dynamic> json) {
+  return LoyaltyCardResponse()
+    ..id = json['id'] as String
+    ..updatedAt = json['updatedAt'] == null
+        ? null
+        : DateTime.parse(json['updatedAt'] as String)
+    ..campaignId = json['campaignId'] as String
+    ..code = json['code'] as String
+    ..status = _$enumDecodeNullable(_$VoucherStatusEnumMap, json['status'])
+    ..redeemedQuantity = json['redeemedQuantity'] as int
+    ..config = json['config'] == null
+        ? null
+        : LoyaltyCardConfig.fromJson(json['config'] as Map<String, dynamic>)
+    ..rules = (json['rules'] as List)
+        ?.map((e) =>
+            e == null ? null : RuleResponse.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..metadata = json['metadata'] as Map<String, dynamic>
+    ..points = json['points'] as int
+    ..balance = json['balance'] as int;
+}
+
+Map<String, dynamic> _$LoyaltyCardResponseToJson(LoyaltyCardResponse instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('updatedAt', instance.updatedAt?.toIso8601String());
+  writeNotNull('campaignId', instance.campaignId);
+  writeNotNull('code', instance.code);
+  writeNotNull('status', _$VoucherStatusEnumMap[instance.status]);
+  writeNotNull('redeemedQuantity', instance.redeemedQuantity);
+  writeNotNull('config', instance.config);
+  writeNotNull('rules', instance.rules);
+  writeNotNull('metadata', instance.metadata);
+  writeNotNull('points', instance.points);
+  writeNotNull('balance', instance.balance);
+  return val;
+}
+
 PaginatedVoucherResponse _$PaginatedVoucherResponseFromJson(
     Map<String, dynamic> json) {
   return PaginatedVoucherResponse(

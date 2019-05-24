@@ -38,18 +38,15 @@ class VoucherCampaign<T extends VoucherConfig> extends Campaign {
   @VoucherConfigConverter()
   T config;
 
-  List<Rule> rules;
-
   VoucherCampaign(String name, DateTime effective, DateTime expiry, this.totalSupply, this.config, {
     this.autoUpdate: true, List<Rule> rules, String description, String category, Map<String, dynamic> metadata}) 
-    : rules = rules ?? <Rule>[],
-      super(CampaignType.VOUCHER, name, effective,expiry,description:description,category:category,metadata:metadata);
+    : super(CampaignType.VOUCHER, name, effective,expiry,description:description,category:category,metadata:metadata);
 
   factory VoucherCampaign.fromJson(Map<String, dynamic> json) => _$VoucherCampaignFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherCampaignToJson(this);
 
   bool operator == (o) => o is VoucherCampaign && o.type == type && o.name == name
-    && o.effective == effective && o.expiry == expiry && listsEqual(o.rules, rules)
+    && o.effective == effective && o.expiry == expiry
     && o.totalSupply == totalSupply && o.autoUpdate == autoUpdate && o.config == config
     && o.description == description && o.category == category && mapsEqual(o.metadata,metadata);
 
@@ -59,27 +56,22 @@ class VoucherCampaign<T extends VoucherConfig> extends Campaign {
 
 @JsonSerializable(includeIfNull: false)
 class LoyaltyProgram extends VoucherCampaign<LoyaltyCardConfig> {
-  List<Rule> earningRules;
 
   LoyaltyProgram(String name, DateTime effective, DateTime expiry, int totalSupply, LoyaltyCardConfig config, {
-    bool autoUpdate = true, List<Rule> rules = const <Rule>[], List<Rule> earningRules = const <Rule>[], 
-    String description, String category, Map<String, dynamic> metadata}) 
-    : this.earningRules = earningRules,
-      super(name, effective,expiry,totalSupply, config, autoUpdate:autoUpdate, rules:rules,
+    bool autoUpdate = true, String description, String category, Map<String, dynamic> metadata}) 
+    : super(name, effective,expiry,totalSupply, config, autoUpdate:autoUpdate,
         description:description,category:category,metadata:metadata);
 
   factory LoyaltyProgram.fromJson(Map<String, dynamic> json) => _$LoyaltyProgramFromJson(json);
   Map<String, dynamic> toJson() => _$LoyaltyProgramToJson(this);
 
   bool operator == (o) => o is LoyaltyProgram && o.type == type && o.name == name
-    && o.effective == effective && o.expiry == expiry && listsEqual(o.rules, rules)
-    && listsEqual(o.earningRules,earningRules)
+    && o.effective == effective && o.expiry == expiry 
     && o.totalSupply == totalSupply && o.autoUpdate == autoUpdate && o.config == config
     && o.description == description && o.category == category && mapsEqual(o.metadata,metadata);
 
   int get hashCode => hashObjects([type,name,effective,expiry,totalSupply,autoUpdate,
-    rules,earningRules,config,description,category,metadata]);
-
+    config,description,category,metadata]);
 }
 
 @JsonSerializable(includeIfNull: false)
@@ -134,10 +126,10 @@ abstract class CampaignResponse {
 @JsonSerializable(includeIfNull: false)
 class VoucherCampaignResponse<T> extends CampaignResponse {
   bool autoUpdate;
-
+  // voucher configuration
   @VoucherConfigConverter()
   T config;
-
+  // redemption rules
   List<RuleResponse> rules;
   
   VoucherCampaignResponse();
@@ -150,8 +142,44 @@ class VoucherCampaignResponse<T> extends CampaignResponse {
 }
 
 @JsonSerializable(includeIfNull: false)
+class EarningRule {
+  // name of the earning rule, e.g., Subscribe newsletter
+  String name;
+  // name of the event that triggers the rule, e.g., customer_subscribed
+  String event;
+  // validation rule to validate if condition is met to award points
+  Rule rule;
+  // earning points if rule is satisfied
+  int points;
+
+  EarningRule(this.name,this.event,this.points, [this.rule]);
+  factory EarningRule.fromJson(Map<String, dynamic> json) => _$EarningRuleFromJson(json);
+  Map<String, dynamic> toJson() => _$EarningRuleToJson(this);
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class RewardRule {
+  String name;
+  // required points for the reward
+  int pointsRequired;
+  // validation rule to limit reward usage
+  Rule rule;
+  // the campaign that this reward is applied to
+  String campaignId;
+
+  RewardRule(this.name,this.pointsRequired, this.rule, this.campaignId);
+  factory RewardRule.fromJson(Map<String, dynamic> json) => _$RewardRuleFromJson(json);
+  Map<String, dynamic> toJson() => _$RewardRuleToJson(this);
+
+}
+
+@JsonSerializable(includeIfNull: false)
 class LoyaltyProgramResponse<T> extends VoucherCampaignResponse<LoyaltyCardConfig> {
-  List<RuleResponse> earningRules;
+  // earning rules for this program
+  List<EarningRule> earningRules = <EarningRule>[];
+  // reward rules for the program
+  List<RewardRule> rewardRules = <RewardRule>[];
   
   LoyaltyProgramResponse();
 

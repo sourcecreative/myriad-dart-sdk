@@ -78,10 +78,10 @@ enum VoucherType {
 
 abstract class VoucherConfig {
   VoucherType type;
-  int redemption = 1;
+  int redemption;
   CodeConfig codeConfig;
   
-  VoucherConfig(this.type, CodeConfig codeConfig, [this.redemption])
+  VoucherConfig(this.type, CodeConfig codeConfig, [this.redemption = 1])
     : this.codeConfig = codeConfig;
 }
 
@@ -169,18 +169,17 @@ class GiftConfig extends VoucherConfig {
 
 @JsonSerializable(includeIfNull: false)
 class LoyaltyCardConfig extends VoucherConfig {
-  int points;
 
-  LoyaltyCardConfig(CodeConfig codeConfig, this.points)
-    : super(VoucherType.LOYALTY_CARD, codeConfig);
+  LoyaltyCardConfig(CodeConfig codeConfig)
+    : super(VoucherType.LOYALTY_CARD, codeConfig, 0);
 
   factory LoyaltyCardConfig.fromJson(Map<String, dynamic> json) => _$LoyaltyCardConfigFromJson(json);
   Map<String, dynamic> toJson() => _$LoyaltyCardConfigToJson(this);  
 
-  bool operator == (o) => o is LoyaltyCardConfig && o.type == type && o.redemption == redemption
-    && o.codeConfig == codeConfig && o.points == points;
+  bool operator == (o) => o is LoyaltyCardConfig && o.type == type
+    && o.codeConfig == codeConfig;
     
-  int get hashCode => hashObjects([type,redemption,codeConfig,points]);
+  int get hashCode => hash3(type,redemption,codeConfig);
 
 }
 

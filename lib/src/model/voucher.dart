@@ -20,7 +20,6 @@ class Voucher<T extends VoucherConfig> {
 
   factory Voucher.fromJson(Map<String, dynamic> json) => _$VoucherFromJson(json);
   Map<String, dynamic> toJson() => _$VoucherToJson(this);
-  
 }
 
 @JsonSerializable(includeIfNull: false)
@@ -56,7 +55,7 @@ class VoucherResponse<T> {
   List<RuleResponse> rules;
   Map<String, dynamic> metadata;
 
-  VoucherResponse();// : super('VoucherResponse');
+  VoucherResponse();
   
   factory VoucherResponse.fromJson(Map<String, dynamic> json) => _$VoucherResponseFromJson<T>(json);
   Map<String, dynamic> toJson() => _$VoucherResponseToJson(this);
@@ -64,6 +63,22 @@ class VoucherResponse<T> {
   static const dynamic Function(Map<String, dynamic>) deserialize = _$VoucherResponseFromJson;
 
 }
+
+@JsonSerializable(includeIfNull: false)
+class LoyaltyCardResponse extends VoucherResponse<LoyaltyCardConfig> {
+  // total points earned
+  int points;
+  // balance points
+  int balance;
+
+  LoyaltyCardResponse();
+
+  factory LoyaltyCardResponse.fromJson(Map<String, dynamic> json) => _$LoyaltyCardResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$LoyaltyCardResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$LoyaltyCardResponseFromJson;
+
+} 
 
 @JsonSerializable(includeIfNull: false)
 class PaginatedVoucherResponse extends PaginatedResponse<VoucherResponse> {

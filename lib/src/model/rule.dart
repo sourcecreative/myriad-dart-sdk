@@ -25,6 +25,31 @@ class Rule {
 
 }
 
+enum RuleAssignmentType {
+  CAMPAIGN, VOUCHER, PROMOTION
+}
+
+@JsonSerializable(includeIfNull: false)
+class RuleAssignment {
+  // voucher campaign id
+  String campaignId;
+  // voucher identifier
+  String voucherId;
+  // promotion campaign id
+  String promotionId;
+
+  RuleAssignment({this.campaignId, this.voucherId, this.promotionId});
+
+  factory RuleAssignment.fromJson(Map<String, dynamic> json) => _$RuleAssignmentFromJson(json);
+  Map<String, dynamic> toJson() => _$RuleAssignmentToJson(this);
+
+  bool operator == (o) => o is RuleAssignment && o.campaignId == campaignId 
+    && o.voucherId == voucherId && o.promotionId == promotionId;
+
+  int get hashCode => hash3(campaignId, voucherId, promotionId);
+
+}
+
 @JsonSerializable(includeIfNull: false)
 class RuleResponse {
   String id;
@@ -57,5 +82,36 @@ class PaginatedRuleResponse extends PaginatedResponse<RuleResponse> {
   Map<String, dynamic> toJson() => _$PaginatedRuleResponseToJson(this);
 
   static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedRuleResponseFromJson;
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class RuleAssignmentResponse {
+  // assignment id
+  String id;
+  RuleAssignmentType type;
+  // validation rule id
+  String ruleId;
+  // id of the object that the rule is assigned to
+  String objectId;
+
+  RuleAssignmentResponse(this.id, this.type, this.ruleId, this.objectId);
+
+  factory RuleAssignmentResponse.fromJson(Map<String, dynamic> json) => _$RuleAssignmentResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$RuleAssignmentResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$RuleAssignmentResponseFromJson;
+
+}
+
+@JsonSerializable(includeIfNull: false)
+class PaginatedRuleAssignmentResponse extends PaginatedResponse<RuleAssignmentResponse> {
+  PaginatedRuleAssignmentResponse(List<RuleAssignmentResponse> entries, int total, { int page=1, int size=20}) 
+    : super(entries, total, page:page, size:size);
+
+ factory PaginatedRuleAssignmentResponse.fromJson(Map<String, dynamic> json) => _$PaginatedRuleAssignmentResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PaginatedRuleAssignmentResponseToJson(this);
+
+  static const dynamic Function(Map<String, dynamic>) deserialize = _$PaginatedRuleAssignmentResponseFromJson;
 
 }

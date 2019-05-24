@@ -23,4 +23,14 @@ abstract class RuleService extends ChopperService {
   Future<Response<PaginatedRuleResponse>> list({@QueryMap() Map<String,dynamic> filter = const <String,dynamic>{}, 
     @Query() int page=1, @Query() int size=20});
 
+  @Post(path:"/{id}/assignments")
+  Future<Response<RuleAssignmentResponse>> createAssignment(@Path() String id, @Body() RuleAssignment assignment);
+
+  @Post(path:"/{id}/assignments/{assignmentId}")
+  Future<Response<void>> removeAssignment(@Path("id") String id, @Path("assignmentId") String assignmentId);
+
+  @Get(path:"/{id}/assignments")
+  Future<Response<PaginatedRuleAssignmentResponse>> listAssignments(@Path() String id, 
+    {@Query() int page = 1, @Query() int size = 20});
 }
+
